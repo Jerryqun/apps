@@ -1,0 +1,36 @@
+<view class="study">
+  <!-- 拼音入口 -->
+  <view class="quick-row">
+    <view class="quick-card" style="background: #AB47BC" bindtap="goPinyin">
+      <view class="quick-icon">🔤</view>
+      <view class="quick-name">拼音学习</view>
+      <view class="quick-desc">声母 · 韵母 · 整体认读</view>
+    </view>
+  </view>
+
+  <!-- 汉字进度 -->
+  <view class="progress-bar-wrap">
+    <view class="progress-label">识字进度：{{learnedCount}} / {{totalCount}}</view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{totalCount ? (learnedCount / totalCount * 100) : 0}}%"></view>
+    </view>
+  </view>
+
+  <!-- 汉字分类 -->
+  <view class="section-title">📖 课本识字</view>
+  <view wx:if="{{loading}}" style="text-align:center;padding:60rpx;color:#999;font-size:28rpx;">加载中...</view>
+  <view class="cat-grid" wx:else>
+    <view
+      class="cat-card"
+      wx:for="{{hanziCategories}}"
+      wx:key="catId"
+      style="background: {{item.color}}"
+      bindtap="goLearn"
+      data-catid="{{item.catId}}"
+    >
+      <view class="cat-icon">{{item.icon}}</view>
+      <view class="cat-name">{{item.name}}</view>
+      <view class="cat-count">{{item.count}} 字</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,54 @@
+<view class="math-page">
+  <!-- 答题中 -->
+  <block wx:if="{{phase === 'playing'}}">
+    <view class="play-top">
+      <view class="play-score">🏆 {{score}}</view>
+      <view class="play-progress">{{currentIndex + 1}} / {{questions.length}}</view>
+      <view wx:if="{{combo > 1}}" class="play-combo">🔥×{{combo}}</view>
+    </view>
+
+    <!-- 鼓励语 -->
+    <view wx:if="{{showEncourage}}" class="encourage-pop">{{showEncourage}}</view>
+
+    <!-- 题目卡片 -->
+    <view class="q-card">
+      <view class="q-hint" wx:if="{{current.hint}}">{{current.hint}}</view>
+      <!-- 钟表题用 canvas 画大钟面 -->
+      <block wx:if="{{current.clockData}}">
+        <view class="clock-wrap">
+          <canvas canvas-id="clockCanvas" class="clock-canvas"></canvas>
+        </view>
+      </block>
+      <view wx:else class="q-text">{{current.text}}</view>
+    </view>
+
+    <!-- 选项 -->
+    <view class="opts-grid">
+      <view
+        class="opt-btn {{answered && String(item) === String(current.answer) ? 'opt-correct' : ''}} {{answered && selectedOption === String(item) && String(item) !== String(current.answer) ? 'opt-wrong' : ''}}"
+        wx:for="{{current.options}}"
+        wx:key="*this"
+        bindtap="selectOption"
+        data-option="{{item}}"
+      >{{item}}</view>
+    </view>
+  </block>
+
+  <!-- 结果页 -->
+  <block wx:if="{{phase === 'result'}}">
+    <view class="result-wrap">
+      <view class="result-stars">
+        <text wx:for="{{3}}" wx:key="*this">{{index < starCount ? '⭐' : '☆'}}</text>
+      </view>
+      <view class="result-emoji">{{starCount >= 3 ? '🎉' : starCount >= 2 ? '👏' : '💪'}}</view>
+      <view class="result-msg">{{starCount >= 3 ? '太棒啦！满分通关！' : starCount >= 2 ? '很不错哦，继续加油！' : '再试一次会更好！'}}</view>
+      <view class="result-info">答对 {{correctCount}} / {{questions.length}} 题</view>
+      <view class="result-info">得分 {{score}} · 最大连对 {{maxCombo}}</view>
+      <view class="result-info">游戏：{{gameName}}</view>
+      <view class="result-actions">
+        <view class="action-btn" style="background: {{gameColor}}" bindtap="playAgain">再来一次 🔄</view>
+        <view class="action-btn" style="background: #90A4AE" bindtap="goBack">换个游戏 🎮</view>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,13 @@
+<view class="practice">
+  <view class="section-title">🏋️ 选择练习项目</view>
+  <view class="entry-list">
+    <view class="entry-card" wx:for="{{entries}}" wx:key="id" style="border-left: 8rpx solid {{item.color}}" bindtap="goEntry" data-page="{{item.page}}">
+      <view class="entry-icon" style="background: {{item.color}}">{{item.icon}}</view>
+      <view class="entry-info">
+        <view class="entry-name">{{item.name}}</view>
+        <view class="entry-desc">{{item.desc}}</view>
+      </view>
+      <view class="entry-arrow">›</view>
+    </view>
+  </view>
+</view>

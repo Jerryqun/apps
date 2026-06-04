@@ -1,0 +1,107 @@
+.study {
+  min-height: 100vh;
+  padding: 24rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.quick-row {
+  display: flex;
+  gap: 20rpx;
+  margin-bottom: 28rpx;
+}
+
+.quick-card {
+  flex: 1;
+  padding: 28rpx 20rpx;
+  border-radius: 24rpx;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.12);
+}
+
+.quick-card:active {
+  transform: scale(0.96);
+}
+
+.quick-icon {
+  font-size: 56rpx;
+}
+
+.quick-name {
+  margin-top: 8rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.progress-bar-wrap {
+  margin-bottom: 28rpx;
+  padding: 20rpx 24rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.progress-label {
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 12rpx;
+}
+
+.progress-track {
+  height: 20rpx;
+  background: #f0f0f0;
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ffd54f, #ff8a65);
+  border-radius: 10rpx;
+  transition: width 0.6s ease;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5d4037;
+  margin-bottom: 20rpx;
+}
+
+.cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.cat-card {
+  width: calc(50% - 8rpx);
+  padding: 28rpx 20rpx;
+  border-radius: 24rpx;
+  box-sizing: border-box;
+  color: #fff;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.cat-card:active {
+  transform: scale(0.96);
+}
+
+.cat-icon {
+  font-size: 48rpx;
+}
+
+.cat-name {
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.cat-count {
+  margin-top: 8rpx;
+  display: inline-block;
+  padding: 2rpx 16rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 16rpx;
+  font-size: 22rpx;
+}

@@ -1,0 +1,132 @@
+.pinyin-page {
+  min-height: 100vh;
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.tab-item {
+  padding: 12rpx 28rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  color: #666;
+  background: #f5f5f5;
+}
+
+.tab-item.active {
+  background: #FFC107;
+  color: #fff;
+  font-weight: bold;
+}
+
+.grid-scroll {
+  max-height: 280rpx;
+  margin-bottom: 20rpx;
+}
+
+.pinyin-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 8rpx 4rpx;
+}
+
+.pinyin-cell {
+  width: 100rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  border: 4rpx solid transparent;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.pinyin-cell.selected {
+  background: #FFF8E1;
+  transform: scale(1.05);
+}
+
+.pinyin-cell:active {
+  transform: scale(0.95);
+}
+
+.detail-card {
+  margin: 20rpx 0;
+  padding: 48rpx 32rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.detail-pinyin {
+  font-size: 96rpx;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.detail-desc {
+  margin-top: 16rpx;
+  font-size: 26rpx;
+  color: #888;
+}
+
+.detail-example {
+  margin-top: 24rpx;
+}
+
+.example-char {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #5d4037;
+}
+
+.example-pinyin {
+  font-size: 28rpx;
+  color: #888;
+  margin-left: 8rpx;
+}
+
+.tap-hint {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #FFA726;
+}
+
+.nav-row {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 24rpx;
+  padding: 0 12rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.nav-btn.disabled {
+  opacity: 0.5;
+}

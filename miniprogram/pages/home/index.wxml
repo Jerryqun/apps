@@ -1,0 +1,54 @@
+<view class="home">
+  <!-- 顶部问候 -->
+  <view class="greeting-card">
+    <view class="greeting-date">{{todayStr}} {{weekDay}}</view>
+    <view class="greeting-text">{{greeting}}</view>
+  </view>
+
+  <!-- 打卡区域 -->
+  <view class="check-card">
+    <view class="check-top">
+      <view class="check-title">📅 本周学习打卡</view>
+      <view class="check-streak" wx:if="{{streakDays > 0}}">🔥 已连续 {{streakDays}} 天</view>
+    </view>
+    <view class="week-row">
+      <view class="week-item {{item.isToday ? 'week-today' : ''}} {{item.checked ? 'week-done' : ''}}" wx:for="{{weekChecks}}" wx:key="day">
+        <view class="week-dot">{{item.checked ? '⭐' : '○'}}</view>
+        <view class="week-label">{{item.day}}</view>
+      </view>
+    </view>
+    <view class="check-btn {{todayChecked ? 'check-btn-done' : ''}}" bindtap="doCheck">
+      {{todayChecked ? '今日已打卡 ✅' : '点我打卡 🎀'}}
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="section-title">🎮 开始学习</view>
+  <view class="quick-grid">
+    <view class="quick-item" wx:for="{{quickEntries}}" wx:key="id" bindtap="goQuick" data-id="{{item.id}}">
+      <view class="quick-icon-wrap" style="background: {{item.color}}">
+        <view class="quick-icon">{{item.icon}}</view>
+      </view>
+      <view class="quick-name">{{item.name}}</view>
+    </view>
+  </view>
+
+  <!-- 趣味小知识 -->
+  <view class="fact-card">
+    <view class="fact-header">
+      <view class="fact-title">💡 考考你</view>
+      <view class="fact-refresh" bindtap="refreshFact">换一题 🔄</view>
+    </view>
+    <view class="fact-body" wx:if="{{funFact}}">
+      <view class="fact-emoji">{{funFact.emoji}}</view>
+      <view class="fact-question">{{funFact.question}}</view>
+    </view>
+    <block wx:if="{{funFact}}">
+      <view wx:if="{{showAnswer}}" class="fact-answer">
+        <view class="fact-answer-label">💡 答案</view>
+        <view class="fact-answer-text">{{funFact.answer}}</view>
+      </view>
+      <view wx:else class="fact-reveal-btn" bindtap="revealAnswer">点击揭晓答案 👀</view>
+    </block>
+  </view>
+</view>

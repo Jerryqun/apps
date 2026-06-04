@@ -1,0 +1,81 @@
+/**app.wxss**/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+page {
+  background: #fff8e1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* 通用圆角卡片 */
+.card {
+  background: #ffffff;
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+/* 通用大圆角按钮（儿童友好，手指好点击） */
+.big-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 96rpx;
+  border-radius: 48rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ffffff;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.big-btn:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+/* 弹跳动画 */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.bounce-in {
+  animation: bounce-in 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-12rpx); }
+  75% { transform: translateX(12rpx); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}

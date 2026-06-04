@@ -1,0 +1,58 @@
+<view class="quiz">
+  <!-- 开始页 -->
+  <view class="start-screen" wx:if="{{!started && !finished}}">
+    <view class="start-emoji">🎮</view>
+    <view class="start-title">听音找汉字</view>
+    <view class="start-desc">
+      听一听读音，从 4 个字里找出正确的那个吧！
+    </view>
+    <view class="start-rule">共 {{totalQuestions}} 道题，看看你能答对几个 😎</view>
+    <view class="start-btn big-btn" style="background: #FF8A65" bindtap="startQuiz">
+      开始挑战 🚀
+    </view>
+  </view>
+
+  <!-- 答题页 -->
+  <view class="play-screen" wx:if="{{started}}">
+    <view class="quiz-top">
+      <view class="quiz-progress">第 {{questionIndex + 1}} / {{totalQuestions}} 题</view>
+      <view class="quiz-score">⭐ {{score}}</view>
+    </view>
+
+    <view class="listen-card card">
+      <view class="listen-tip">这个字怎么读？</view>
+      <view class="sound-btn" bindtap="replaySound">🔊</view>
+      <view class="hint-pinyin">{{question.pinyin}}</view>
+      <view class="hint-sentence">提示：{{question.words[0]}}</view>
+    </view>
+
+    <view class="options-grid">
+      <view
+        class="option-card {{showResult && item.id === correctId ? 'correct' : ''}} {{showResult && item.id === answeredId && item.id !== correctId ? 'wrong' : ''}}"
+        wx:for="{{options}}"
+        wx:key="id"
+        bindtap="chooseOption"
+        data-id="{{item.id}}"
+      >
+        <text class="option-char">{{item.char}}</text>
+        <text class="option-mark" wx:if="{{showResult && item.id === correctId}}">✅</text>
+        <text class="option-mark" wx:if="{{showResult && item.id === answeredId && item.id !== correctId}}">❌</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结果页 -->
+  <view class="result-screen bounce-in" wx:if="{{finished}}">
+    <view class="result-emoji">{{score >= 8 ? '🏆' : (score >= 5 ? '🎉' : '💪')}}</view>
+    <view class="result-title">
+      {{score >= 8 ? '太厉害啦！' : (score >= 5 ? '做得不错！' : '继续加油！')}}
+    </view>
+    <view class="result-score">
+      答对 <text class="score-num">{{score}}</text> / {{totalQuestions}} 题
+    </view>
+    <view class="result-btns">
+      <view class="big-btn" style="background: #FF8A65" bindtap="restart">再玩一次 🔄</view>
+      <view class="big-btn ghost-btn" bindtap="backHome">回去学习 📖</view>
+    </view>
+  </view>
+</view>

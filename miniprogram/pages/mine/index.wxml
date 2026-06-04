@@ -1,0 +1,97 @@
+<view class="mine">
+  <!-- 头部 -->
+  <view class="mine-header" bindtap="openProfileEditor">
+    <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"></image>
+    <view wx:else class="avatar">🧒</view>
+    <view class="hello">你好，{{nickName || '小学霸'}}！</view>
+    <view class="edit-hint">👆 点击设置头像昵称</view>
+  </view>
+
+  <!-- 语文成绩 -->
+  <view class="section-card card">
+    <view class="block-title">📖 语文</view>
+    <view class="stat-row">
+      <view class="stat-item">
+        <view class="stat-num">{{learnedCount}}</view>
+        <view class="stat-label">已学汉字</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{totalCount}}</view>
+        <view class="stat-label">总字数</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{bestScore}}</view>
+        <view class="stat-label">测验最高</view>
+      </view>
+    </view>
+    <view class="progress-bar">
+      <view class="progress-inner" style="width: {{totalCount ? (learnedCount / totalCount * 100) : 0}}%"></view>
+    </view>
+  </view>
+
+  <!-- 数学成绩 -->
+  <view class="section-card card">
+    <view class="block-title">🔢 数学口算</view>
+    <view class="stat-row">
+      <view class="stat-item">
+        <view class="stat-num">{{mathEasy}}</view>
+        <view class="stat-label">⭐ 简单</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{mathMedium}}</view>
+        <view class="stat-label">⭐⭐ 中等</view>
+      </view>
+      <view class="stat-item">
+        <view class="stat-num">{{mathHard}}</view>
+        <view class="stat-label">⭐⭐⭐ 挑战</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 收藏的汉字 -->
+  <view class="fav-block card">
+    <view class="block-title">⭐ 我的收藏</view>
+    <view class="fav-empty" wx:if="{{favoriteChars.length === 0}}">
+      还没有收藏的字哦，去学习页点 ☆ 收藏吧～
+      <view class="go-learn-btn" bindtap="goLearn">去学习 📖</view>
+    </view>
+    <view class="fav-grid" wx:else>
+      <view class="fav-item" wx:for="{{favoriteChars}}" wx:key="*this">
+        <text class="fav-char" bindtap="speakChar" data-char="{{item}}">{{item}}</text>
+        <text class="fav-remove" bindtap="removeFavorite" data-char="{{item}}">✕</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 重置 -->
+  <view class="reset-btn" bindtap="clearProgress">重置我的进度</view>
+
+  <!-- 资料编辑弹窗 -->
+  <view wx:if="{{showProfileEditor}}" class="modal-mask" catchtap="closeProfileEditor">
+    <view class="modal-box" catchtap="noop">
+      <view class="modal-title">设置我的资料</view>
+
+      <button
+        class="avatar-picker"
+        open-type="chooseAvatar"
+        bindchooseavatar="onChooseAvatar"
+      >
+        <image wx:if="{{editingAvatar}}" class="picker-img" src="{{editingAvatar}}" mode="aspectFill"></image>
+        <view wx:else class="picker-placeholder">点击选择头像 📷</view>
+      </button>
+
+      <input
+        class="nick-input"
+        type="nickname"
+        placeholder="请输入昵称"
+        value="{{editingNickName}}"
+        bindinput="onNickNameInput"
+      />
+
+      <view class="modal-btns">
+        <view class="modal-btn cancel" catchtap="closeProfileEditor">取消</view>
+        <view class="modal-btn confirm" catchtap="saveProfile">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

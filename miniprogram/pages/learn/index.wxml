@@ -1,0 +1,50 @@
+<!-- 加载中 -->
+<view wx:if="{{loading}}" style="text-align:center;padding:120rpx 0;color:#999;font-size:30rpx;">加载中...</view>
+
+<view class="learn" wx:elif="{{current}}">
+  <!-- 进度 -->
+  <view class="top-bar">
+    <view class="page-indicator">{{currentIndex + 1}} / {{total || list.length}}</view>
+    <view class="fav-btn" bindtap="toggleFavorite">{{isFavorite ? '⭐' : '☆'}}</view>
+  </view>
+
+  <!-- 主卡片 -->
+  <view class="main-card card bounce-in" wx:key="animKey" data-key="{{animKey}}">
+    <view class="pinyin">{{current.pinyin}}</view>
+    <view class="big-char" bindtap="onTapChar">{{current.char}}</view>
+    <view class="emoji-row">{{current.emoji}}</view>
+    <view class="strokes">笔画：{{current.strokes}} 画</view>
+    <view class="tap-tip" bindtap="onTapChar">👆 点一点，听读音</view>
+  </view>
+
+  <!-- 组词 -->
+  <view class="block card">
+    <view class="block-title">📝 组词 <text style="font-size:22rpx;color:#999;">点击朗读</text></view>
+    <view class="word-row">
+      <view class="word-chip" wx:for="{{current.words}}" wx:key="*this" bindtap="onTapWord" data-word="{{item}}">🔊 {{item}}</view>
+    </view>
+  </view>
+
+  <!-- 例句 -->
+  <view class="block card" bindtap="onTapSentence">
+    <view class="block-title">💬 例句 <text style="font-size:22rpx;color:#999;">点击朗读</text></view>
+    <view class="sentence">🔊 {{current.sentence}}</view>
+  </view>
+
+  <!-- 已认识按钮 -->
+  <view class="known-row">
+    <view class="known-btn" bindtap="markKnown">我已认识这个字 ✅</view>
+  </view>
+
+  <!-- 翻页按钮 -->
+  <view class="nav-row">
+    <view
+      class="nav-btn {{currentIndex === 0 ? 'disabled' : ''}}"
+      style="background: #90A4AE"
+      bindtap="prev"
+    >⬅️ 上一个</view>
+    <view class="nav-btn" style="background: {{category.color || '#42A5F5'}}" bindtap="next">
+      {{hasMore && currentIndex === list.length - 1 ? '加载更多 ⬇️' : '下一个 ➡️'}}
+    </view>
+  </view>
+</view>

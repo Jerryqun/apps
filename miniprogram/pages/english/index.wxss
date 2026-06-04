@@ -1,0 +1,176 @@
+.english-page {
+  min-height: 100vh;
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.tab-scroll {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.tab-bar {
+  display: inline-flex;
+  gap: 12rpx;
+  padding: 4rpx 0;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  white-space: nowrap;
+}
+
+.tab-item.active {
+  background: #FFC107;
+  color: #fff;
+  font-weight: bold;
+}
+
+.grid-scroll {
+  max-height: 300rpx;
+  margin-bottom: 20rpx;
+}
+
+.word-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  padding: 8rpx 4rpx 16rpx;
+}
+
+.word-cell {
+  min-width: 120rpx;
+  padding: 12rpx 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fff;
+  border-radius: 16rpx;
+  border: 4rpx solid transparent;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.word-cell.selected {
+  background: #FFF8E1;
+  transform: scale(1.05);
+}
+
+.word-cell:active {
+  transform: scale(0.95);
+}
+
+.cell-emoji {
+  font-size: 36rpx;
+}
+
+.cell-text {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 4rpx;
+}
+
+.detail-card {
+  margin: 20rpx 0;
+  padding: 48rpx 32rpx;
+  text-align: center;
+  background: #fff;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.letter-row {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 24rpx;
+}
+
+.big-letter {
+  font-size: 120rpx;
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.small-letter {
+  font-size: 80rpx;
+  color: #888;
+  font-weight: bold;
+}
+
+.word-info {
+  margin-top: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+}
+
+.word-emoji {
+  font-size: 48rpx;
+}
+
+.word-text {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.word-meaning {
+  font-size: 28rpx;
+  color: #888;
+}
+
+.word-emoji-big {
+  font-size: 96rpx;
+}
+
+.word-big {
+  font-size: 64rpx;
+  font-weight: bold;
+  margin-top: 16rpx;
+}
+
+.word-meaning-big {
+  font-size: 32rpx;
+  color: #888;
+  margin-top: 12rpx;
+}
+
+.tap-hint {
+  margin-top: 24rpx;
+  font-size: 24rpx;
+  color: #FFA726;
+}
+
+.nav-row {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 24rpx;
+  padding: 0 12rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.nav-btn.disabled {
+  opacity: 0.5;
+}

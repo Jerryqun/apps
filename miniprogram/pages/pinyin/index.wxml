@@ -1,0 +1,47 @@
+<view class="pinyin-page">
+  <!-- 分类切换 -->
+  <view class="tab-bar">
+    <view
+      class="tab-item {{currentCat.id === item.id ? 'active' : ''}}"
+      wx:for="{{categories}}"
+      wx:key="id"
+      bindtap="switchCategory"
+      data-id="{{item.id}}"
+    >
+      {{item.icon}} {{item.name}}
+    </view>
+  </view>
+
+  <!-- 拼音网格 -->
+  <scroll-view class="grid-scroll" scroll-y>
+    <view class="pinyin-grid">
+      <view
+        class="pinyin-cell {{currentIndex === index ? 'selected' : ''}}"
+        wx:for="{{currentCat.list}}"
+        wx:key="pinyin"
+        bindtap="selectItem"
+        data-index="{{index}}"
+        style="border-color: {{currentIndex === index ? currentCat.color : 'transparent'}}"
+      >
+        {{item.pinyin}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 详情卡片 -->
+  <view class="detail-card card" wx:if="{{current}}" bindtap="onTapPinyin">
+    <view class="detail-pinyin" style="color: {{currentCat.color}}">{{current.pinyin}}</view>
+    <view class="detail-desc">{{current.desc}}</view>
+    <view class="detail-example">
+      <text class="example-char">{{current.example}}</text>
+      <text class="example-pinyin">（{{current.examplePinyin}}）</text>
+    </view>
+    <view class="tap-hint">👆 点击听发音</view>
+  </view>
+
+  <!-- 翻页 -->
+  <view class="nav-row">
+    <view class="nav-btn {{currentIndex === 0 ? 'disabled' : ''}}" style="background: #90A4AE" bindtap="prev">⬅️ 上一个</view>
+    <view class="nav-btn" style="background: {{currentCat.color}}" bindtap="next">下一个 ➡️</view>
+  </view>
+</view>

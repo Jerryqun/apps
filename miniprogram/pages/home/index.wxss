@@ -1,0 +1,191 @@
+.home {
+  min-height: 100vh;
+  padding: 24rpx 28rpx 40rpx;
+  box-sizing: border-box;
+}
+
+/* ========= 问候卡片 ========= */
+.greeting-card {
+  background: linear-gradient(135deg, #FF8A65, #F06292);
+  border-radius: 28rpx;
+  padding: 36rpx 32rpx;
+  color: #fff;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(240, 98, 146, 0.3);
+}
+.greeting-date {
+  font-size: 24rpx;
+  opacity: 0.85;
+}
+.greeting-text {
+  font-size: 38rpx;
+  font-weight: bold;
+  margin-top: 8rpx;
+}
+
+/* ========= 打卡区域 ========= */
+.check-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.check-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.check-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5D4037;
+}
+.check-streak {
+  font-size: 24rpx;
+  color: #FF6D00;
+  font-weight: bold;
+}
+.week-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20rpx;
+}
+.week-item {
+  text-align: center;
+  width: 64rpx;
+}
+.week-dot {
+  font-size: 32rpx;
+  height: 48rpx;
+  line-height: 48rpx;
+}
+.week-label {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+.week-today .week-label {
+  color: #E91E63;
+  font-weight: bold;
+}
+.week-done .week-dot {
+  color: #FFB300;
+}
+.check-btn {
+  text-align: center;
+  padding: 18rpx 0;
+  background: linear-gradient(135deg, #F06292, #E91E63);
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+}
+.check-btn:active { transform: scale(0.96); }
+.check-btn-done {
+  background: linear-gradient(135deg, #A5D6A7, #66BB6A);
+}
+
+/* ========= 快捷入口 ========= */
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5D4037;
+  margin-bottom: 16rpx;
+}
+.quick-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}
+.quick-item {
+  text-align: center;
+  width: 22%;
+}
+.quick-item:active { transform: scale(0.92); }
+.quick-icon-wrap {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+}
+.quick-icon {
+  font-size: 48rpx;
+}
+.quick-name {
+  font-size: 24rpx;
+  color: #5D4037;
+  font-weight: bold;
+}
+
+/* ========= 趣味小知识 ========= */
+.fact-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.fact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+.fact-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5D4037;
+}
+.fact-refresh {
+  font-size: 24rpx;
+  color: #999;
+}
+.fact-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+.fact-emoji {
+  font-size: 56rpx;
+  flex-shrink: 0;
+}
+.fact-question {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  line-height: 1.6;
+}
+.fact-reveal-btn {
+  margin-top: 20rpx;
+  text-align: center;
+  padding: 18rpx 0;
+  background: linear-gradient(135deg, #FFB74D, #FF8A65);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: bold;
+  border-radius: 36rpx;
+}
+.fact-reveal-btn:active { transform: scale(0.96); }
+.fact-answer {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #FFF8E1;
+  border-radius: 16rpx;
+  border-left: 6rpx solid #FFB74D;
+}
+.fact-answer-label {
+  font-size: 24rpx;
+  color: #FF8A65;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+.fact-answer-text {
+  font-size: 28rpx;
+  color: #555;
+  line-height: 1.6;
+}

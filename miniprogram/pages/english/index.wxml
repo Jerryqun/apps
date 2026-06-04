@@ -1,0 +1,62 @@
+<view class="english-page">
+  <!-- 分类切换 -->
+  <scroll-view class="tab-scroll" scroll-x>
+    <view class="tab-bar">
+      <view
+        class="tab-item {{currentCat.id === item.id ? 'active' : ''}}"
+        wx:for="{{categories}}"
+        wx:key="id"
+        bindtap="switchCategory"
+        data-id="{{item.id}}"
+      >
+        {{item.icon}} {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 内容网格 -->
+  <scroll-view class="grid-scroll" scroll-y>
+    <view class="word-grid">
+      <view
+        class="word-cell {{currentIndex === index ? 'selected' : ''}}"
+        wx:for="{{currentCat.list}}"
+        wx:key="word"
+        bindtap="selectItem"
+        data-index="{{index}}"
+        style="border-color: {{currentIndex === index ? currentCat.color : 'transparent'}}"
+      >
+        <text class="cell-emoji">{{item.emoji}}</text>
+        <text class="cell-text">{{isAlphabet ? item.letter : item.word}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 详情卡片 -->
+  <view class="detail-card" wx:if="{{current}}">
+    <!-- 字母模式 -->
+    <block wx:if="{{isAlphabet}}">
+      <view class="letter-row" bindtap="onTapLetter">
+        <text class="big-letter" style="color: {{currentCat.color}}">{{current.letter}}</text>
+        <text class="small-letter">{{current.lower}}</text>
+      </view>
+      <view class="word-info" bindtap="onTapWord">
+        <text class="word-emoji">{{current.emoji}}</text>
+        <text class="word-text">{{current.word}}</text>
+        <text class="word-meaning">{{current.meaning}}</text>
+      </view>
+    </block>
+    <!-- 单词模式 -->
+    <block wx:else>
+      <view class="word-emoji-big">{{current.emoji}}</view>
+      <view class="word-big" style="color: {{currentCat.color}}">{{current.word}}</view>
+      <view class="word-meaning-big">{{current.meaning}}</view>
+    </block>
+    <view class="tap-hint" bindtap="onTapWord">👆 点击听发音</view>
+  </view>
+
+  <!-- 翻页 -->
+  <view class="nav-row">
+    <view class="nav-btn {{currentIndex === 0 ? 'disabled' : ''}}" style="background: #90A4AE" bindtap="prev">⬅️ 上一个</view>
+    <view class="nav-btn" style="background: {{currentCat.color}}" bindtap="next">下一个 ➡️</view>
+  </view>
+</view>

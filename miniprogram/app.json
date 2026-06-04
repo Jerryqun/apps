@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/study/index",
+    "pages/practice/index",
+    "pages/mine/index",
+    "pages/learn/index",
+    "pages/pinyin/index",
+    "pages/english/index",
+    "pages/math/index",
+    "pages/math-play/index",
+    "pages/quiz/index",
+    "pages/index/index",
+    "pages/example/index"
+  ],
+  "window": {
+    "backgroundColor": "#FFF8E1",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FFC107",
+    "navigationBarTitleText": "快乐学一年级",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF8A65",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/study/index",
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/practice/index",
+        "text": "练习"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
