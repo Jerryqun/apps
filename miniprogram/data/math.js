@@ -35,7 +35,7 @@ function pickRandom(arr) {
 
 // ======== 口算闯关 ========
 function genCalc() {
-  var maxNum = pickRandom([10, 10, 10, 20, 20]);
+  var maxNum = pickRandom([50, 50, 100, 100, 100]);
   var isAdd = Math.random() > 0.4;
   var a, b, answer, symbol;
   if (isAdd) {
@@ -51,7 +51,7 @@ function genCalc() {
   }
   var options = [answer];
   while (options.length < 4) {
-    var fake = answer + randInt(-3, 4);
+    var fake = answer + randInt(-10, 10);
     if (fake < 0) fake = Math.abs(fake);
     if (fake !== answer && options.indexOf(fake) === -1) options.push(fake);
   }
