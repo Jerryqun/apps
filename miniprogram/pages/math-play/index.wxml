@@ -25,7 +25,7 @@
     <!-- 选项 -->
     <view class="opts-grid">
       <view
-        class="opt-btn {{answered && String(item) === String(current.answer) ? 'opt-correct' : ''}} {{answered && selectedOption === String(item) && String(item) !== String(current.answer) ? 'opt-wrong' : ''}}"
+        class="opt-btn {{answered && item == current.answer ? 'opt-correct' : ''}} {{answered && selectedOption == item && item != current.answer ? 'opt-wrong' : ''}}"
         wx:for="{{current.options}}"
         wx:key="*this"
         bindtap="selectOption"

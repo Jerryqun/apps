@@ -51,6 +51,7 @@ const userLogin = async (event) => {
     const playCount = (cloudUser.quizPlayCount || 0) > (local.quizPlayCount || 0)
       ? cloudUser.quizPlayCount
       : (local.quizPlayCount || 0);
+    const mergedCheckLog = mergeCheckLog(cloudUser.checkLog, local.checkLog);
 
     await db
       .collection(USER_COLLECTION)
@@ -61,6 +62,7 @@ const userLogin = async (event) => {
           favoriteChars: mergedFavorites,
           quizBestScore: bestScore,
           quizPlayCount: playCount,
+          checkLog: mergedCheckLog,
           updateTime: db.serverDate()
         }
       });
@@ -74,7 +76,8 @@ const userLogin = async (event) => {
         learnedChars: mergedLearned,
         favoriteChars: mergedFavorites,
         quizBestScore: bestScore,
-        quizPlayCount: playCount
+        quizPlayCount: playCount,
+        checkLog: mergedCheckLog
       }
     };
   }
@@ -88,6 +91,7 @@ const userLogin = async (event) => {
     favoriteChars: local.favoriteChars || [],
     quizBestScore: local.quizBestScore || 0,
     quizPlayCount: local.quizPlayCount || 0,
+    checkLog: (local.checkLog && typeof local.checkLog === "object") ? local.checkLog : {},
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   };
@@ -102,13 +106,14 @@ const userLogin = async (event) => {
       learnedChars: newUser.learnedChars,
       favoriteChars: newUser.favoriteChars,
       quizBestScore: newUser.quizBestScore,
-      quizPlayCount: newUser.quizPlayCount
+      quizPlayCount: newUser.quizPlayCount,
+      checkLog: newUser.checkLog
     }
   };
 };
 
 // 同步用户学习数据到云端
-// 入参 event.data: { learnedChars, favoriteChars, quizBestScore, quizPlayCount }
+// 入参 event.data: { learnedChars, favoriteChars, quizBestScore, quizPlayCount, checkLog }
 const syncUserData = async (event) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
@@ -128,6 +133,20 @@ const syncUserData = async (event) => {
   }
   if (typeof data.quizPlayCount === "number") {
     updateData.quizPlayCount = data.quizPlayCount;
+  }
+
+  // checkLog 需要合并而非覆盖：先读云端已有记录，合并后再写入
+  if (data.checkLog && typeof data.checkLog === "object") {
+    const queryResult = await db
+      .collection(USER_COLLECTION)
+      .where({ _openid: openid })
+      .get();
+    if (queryResult.data.length > 0) {
+      const cloudCheckLog = queryResult.data[0].checkLog || {};
+      updateData.checkLog = mergeCheckLog(cloudCheckLog, data.checkLog);
+    } else {
+      updateData.checkLog = data.checkLog;
+    }
   }
 
   const result = await db
@@ -169,6 +188,17 @@ function mergeUniqueArray(cloudArr, localArr) {
     }
   });
   return base;
+}
+
+// 合并两个打卡记录对象（取并集，所有打卡日期都保留）
+// checkLog 格式：{ "2026-6-22": true, "2026-6-21": true }
+function mergeCheckLog(cloudLog, localLog) {
+  const merged = {};
+  const cloud = (cloudLog && typeof cloudLog === "object") ? cloudLog : {};
+  const local = (localLog && typeof localLog === "object") ? localLog : {};
+  Object.keys(cloud).forEach(function (key) { merged[key] = true; });
+  Object.keys(local).forEach(function (key) { merged[key] = true; });
+  return merged;
 }
 
 // ============ 用户体系云函数结束 ============

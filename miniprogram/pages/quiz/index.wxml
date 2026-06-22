@@ -28,15 +28,15 @@
 
     <view class="options-grid">
       <view
-        class="option-card {{showResult && item.id === correctId ? 'correct' : ''}} {{showResult && item.id === answeredId && item.id !== correctId ? 'wrong' : ''}}"
+        class="option-card {{showResult && item.id == correctId ? 'correct' : ''}} {{showResult && item.id == answeredId && item.id != correctId ? 'wrong' : ''}}"
         wx:for="{{options}}"
         wx:key="id"
         bindtap="chooseOption"
         data-id="{{item.id}}"
       >
         <text class="option-char">{{item.char}}</text>
-        <text class="option-mark" wx:if="{{showResult && item.id === correctId}}">✅</text>
-        <text class="option-mark" wx:if="{{showResult && item.id === answeredId && item.id !== correctId}}">❌</text>
+        <text class="option-mark" wx:if="{{showResult && item.id == correctId}}">✅</text>
+        <text class="option-mark" wx:if="{{showResult && item.id == answeredId && item.id != correctId}}">❌</text>
       </view>
     </view>
   </view>

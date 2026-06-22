@@ -22,6 +22,7 @@ var funFacts = [
 ];
 
 var weekDays = ["日", "一", "二", "三", "四", "五", "六"];
+var user = require("../../utils/user.js");
 
 Page({
   data: {
@@ -43,7 +44,8 @@ Page({
 
   onLoad: function () {
     this.initToday();
-    this.loadStreak();
+    this.loadStreak(); // 先用本地缓存快速渲染
+    this.syncCheckFromCloud(); // 异步从云端拉取打卡记录并合并
   },
 
   onShow: function () {
@@ -154,6 +156,24 @@ Page({
     wx.vibrateShort({ type: "light" });
     this.loadStreak();
     wx.showToast({ title: "打卡成功！🎉", icon: "none" });
+    // 同步打卡记录到云端（静默执行，失败不阻塞）
+    user.syncToCloud();
+  },
+
+  // 从云端拉取打卡记录，合并到本地后重新渲染
+  syncCheckFromCloud: function () {
+    var self = this;
+    user
+      .login()
+      .then(function () {
+        // login 已将云端 checkLog 合并写入本地缓存
+        self.loadStreak();
+        // 如果登录期间本地有新增打卡（用户手快），再同步一次到云端
+        user.syncToCloud();
+      })
+      .catch(function (err) {
+        console.warn("从云端同步打卡记录失败：", err);
+      });
   },
 
   goQuick: function (event) {

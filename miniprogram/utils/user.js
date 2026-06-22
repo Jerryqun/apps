@@ -13,7 +13,8 @@ const STORAGE_KEYS = {
   learned: "learnedChars",
   favorite: "favoriteChars",
   bestScore: "quizBestScore",
-  playCount: "quizPlayCount"
+  playCount: "quizPlayCount",
+  checkLog: "checkLog"
 };
 
 // 读取本地学习数据
@@ -22,7 +23,8 @@ function readLocalData() {
     learnedChars: wx.getStorageSync(STORAGE_KEYS.learned) || [],
     favoriteChars: wx.getStorageSync(STORAGE_KEYS.favorite) || [],
     quizBestScore: wx.getStorageSync(STORAGE_KEYS.bestScore) || 0,
-    quizPlayCount: wx.getStorageSync(STORAGE_KEYS.playCount) || 0
+    quizPlayCount: wx.getStorageSync(STORAGE_KEYS.playCount) || 0,
+    checkLog: wx.getStorageSync(STORAGE_KEYS.checkLog) || {}
   };
 }
 
@@ -32,6 +34,13 @@ function writeLocalData(userData) {
   wx.setStorageSync(STORAGE_KEYS.favorite, userData.favoriteChars || []);
   wx.setStorageSync(STORAGE_KEYS.bestScore, userData.quizBestScore || 0);
   wx.setStorageSync(STORAGE_KEYS.playCount, userData.quizPlayCount || 0);
+  // checkLog 采用合并策略而非覆盖，避免本地刚新增的打卡被云端旧数据冲掉
+  var localCheckLog = wx.getStorageSync(STORAGE_KEYS.checkLog) || {};
+  var cloudCheckLog = userData.checkLog || {};
+  var merged = {};
+  Object.keys(localCheckLog).forEach(function (k) { merged[k] = true; });
+  Object.keys(cloudCheckLog).forEach(function (k) { merged[k] = true; });
+  wx.setStorageSync(STORAGE_KEYS.checkLog, merged);
 }
 
 // 调用云函数的统一封装，返回 Promise
