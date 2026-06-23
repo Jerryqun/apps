@@ -143,3 +143,17 @@
   width: 440rpx;
   height: 440rpx;
 }
+
+/* ========= 乘法可视化 ========= */
+.multiply-visual {
+  margin-top: 28rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+  align-items: center;
+}
+.multiply-row {
+  font-size: 36rpx;
+  letter-spacing: 6rpx;
+  line-height: 1.5;
+}

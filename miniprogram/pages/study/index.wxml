@@ -1,10 +1,27 @@
 <view class="study">
-  <!-- 拼音入口 -->
+  <!-- 快捷入口 -->
   <view class="quick-row">
     <view class="quick-card" style="background: #AB47BC" bindtap="goPinyin">
       <view class="quick-icon">🔤</view>
       <view class="quick-name">拼音学习</view>
       <view class="quick-desc">声母 · 韵母 · 整体认读</view>
+    </view>
+    <view class="quick-card" style="background: #5C6BC0" bindtap="goRadicals">
+      <view class="quick-icon">✍️</view>
+      <view class="quick-name">偏旁部首</view>
+      <view class="quick-desc">认识12个常见偏旁</view>
+    </view>
+  </view>
+  <view class="quick-row">
+    <view class="quick-card" style="background: #7E57C2" bindtap="goPoems">
+      <view class="quick-icon">📜</view>
+      <view class="quick-name">古诗启蒙</view>
+      <view class="quick-desc">必背唐诗 · 带拼音</view>
+    </view>
+    <view class="quick-card" style="background: #26C6DA" bindtap="goSentence">
+      <view class="quick-icon">📝</view>
+      <view class="quick-name">连词成句</view>
+      <view class="quick-desc">排列词语组句子</view>
     </view>
   </view>
 

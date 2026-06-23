@@ -33,6 +33,12 @@
   font-weight: bold;
 }
 
+.quick-desc {
+  margin-top: 6rpx;
+  font-size: 22rpx;
+  opacity: 0.85;
+}
+
 .progress-bar-wrap {
   margin-bottom: 28rpx;
   padding: 20rpx 24rpx;

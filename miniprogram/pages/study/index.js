@@ -61,5 +61,17 @@ Page({
 
   goEnglish: function () {
     wx.navigateTo({ url: "/pages/english/index" });
+  },
+
+  goRadicals: function () {
+    wx.navigateTo({ url: "/pages/radicals/index" });
+  },
+
+  goPoems: function () {
+    wx.navigateTo({ url: "/pages/poems/index" });
+  },
+
+  goSentence: function () {
+    wx.navigateTo({ url: "/pages/sentence/index" });
   }
 });

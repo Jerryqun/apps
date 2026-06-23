@@ -1,0 +1,51 @@
+<view class="poems-page">
+  <!-- 古诗列表 -->
+  <scroll-view class="poem-tabs" scroll-x>
+    <view class="tab-bar">
+      <view
+        class="tab-item {{current.id === item.id ? 'active' : ''}}"
+        wx:for="{{poems}}"
+        wx:key="id"
+        bindtap="selectPoem"
+        data-id="{{item.id}}"
+        style="{{current.id === item.id ? 'background:' + item.color + ';color:#fff' : ''}}"
+      >
+        {{item.emoji}} {{item.title}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 古诗内容卡 -->
+  <view class="poem-card" wx:if="{{current}}" style="border-top: 8rpx solid {{current.color}}">
+    <view class="poem-header">
+      <view class="poem-title">{{current.title}}</view>
+      <view class="poem-author">【{{current.dynasty}}】{{current.author}}</view>
+      <view class="poem-tip">👆 点击诗句听朗读</view>
+    </view>
+
+    <view class="poem-body">
+      <view class="poem-line" wx:for="{{current.lines}}" wx:key="*this" wx:for-index="idx" bindtap="readLine" data-line="{{item}}">
+        <view class="line-pinyin" wx:if="{{showPinyin}}">{{current.pinyin[idx]}}</view>
+        <view class="line-text">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="poem-actions">
+      <view class="pinyin-toggle" bindtap="togglePinyin">
+        {{showPinyin ? '隐藏拼音' : '显示拼音'}}
+      </view>
+      <view class="read-btn" bindtap="readAll">🔊 朗读全诗</view>
+    </view>
+
+    <view class="poem-meaning">
+      <view class="meaning-label">📖 白话意思</view>
+      <view class="meaning-text">{{current.meaning}}</view>
+    </view>
+  </view>
+
+  <!-- 翻页 -->
+  <view class="nav-row">
+    <view class="nav-btn {{currentIndex === 0 ? 'disabled' : ''}}" bindtap="prev">⬅️ 上一首</view>
+    <view class="nav-btn nav-primary" style="background: {{current.color}}" bindtap="next">下一首 ➡️</view>
+  </view>
+</view>

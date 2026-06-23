@@ -19,6 +19,13 @@
           <canvas canvas-id="clockCanvas" class="clock-canvas"></canvas>
         </view>
       </block>
+      <!-- 乘法题：显示算式 + emoji 阵列帮助理解 -->
+      <block wx:elif="{{current.multiplyData}}">
+        <view class="q-text">{{current.text}}</view>
+        <view class="multiply-visual">
+          <view class="multiply-row" wx:for="{{current.multiplyData.rows}}" wx:key="index">{{item}}</view>
+        </view>
+      </block>
       <view wx:else class="q-text">{{current.text}}</view>
     </view>
 

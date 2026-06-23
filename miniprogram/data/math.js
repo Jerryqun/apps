@@ -1,5 +1,5 @@
 // 数学小游戏 —— 一年级数学启蒙
-// 6种游戏模式，结合人教版一年级上下册教材
+// 12种游戏模式，结合人教版一年级上下册教材
 
 // ======== 游戏模式定义 ========
 var games = [
@@ -8,7 +8,13 @@ var games = [
   { id: "shape", name: "认图形", icon: "🔷", color: "#AB47BC", desc: "认识形状", total: 8 },
   { id: "clock", name: "认钟表", icon: "🕐", color: "#FF7043", desc: "几点钟啦", total: 8 },
   { id: "count", name: "数数乐", icon: "🎯", color: "#26C6DA", desc: "数一数", total: 8 },
-  { id: "pattern", name: "找规律", icon: "🧩", color: "#EC407A", desc: "下一个是什么", total: 8 }
+  { id: "pattern", name: "找规律", icon: "🧩", color: "#EC407A", desc: "下一个是什么", total: 8 },
+  { id: "multiply", name: "乘法表", icon: "✖️", color: "#FF9800", desc: "九九乘法口诀", total: 10 },
+  { id: "position", name: "位置方向", icon: "🧭", color: "#26A69A", desc: "上下前后左右", total: 8 },
+  { id: "chaincalc", name: "连加连减", icon: "🔗", color: "#5C6BC0", desc: "两步运算", total: 10 },
+  { id: "money", name: "认识人民币", icon: "💰", color: "#FBC02D", desc: "购物找零", total: 8 },
+  { id: "compose", name: "数的组成", icon: "🔢", color: "#EC407A", desc: "十位和个位", total: 8 },
+  { id: "classify", name: "分类整理", icon: "🗂️", color: "#66BB6A", desc: "找不同类", total: 8 }
 ];
 
 function getGameById(id) {
@@ -263,6 +269,222 @@ function genPattern() {
   }
 }
 
+// ======== 乘法表 ========
+// 九九乘法口诀表（中文口诀，帮助小朋友朗朗上口地记忆）
+var multiplyRhymes = {
+  "1-1": "一一得一",
+  "1-2": "一二得二", "2-2": "二二得四",
+  "1-3": "一三得三", "2-3": "二三得六", "3-3": "三三得九",
+  "1-4": "一四得四", "2-4": "二四得八", "3-4": "三四十二", "4-4": "四四十六",
+  "1-5": "一五得五", "2-5": "二五一十", "3-5": "三五十五", "4-5": "四五二十", "5-5": "五五二十五",
+  "1-6": "一六得六", "2-6": "二六十二", "3-6": "三六十八", "4-6": "四六二十四", "5-6": "五六三十", "6-6": "六六三十六",
+  "1-7": "一七得七", "2-7": "二七十四", "3-7": "三七二十一", "4-7": "四七二十八", "5-7": "五七三十五", "6-7": "六七四十二", "7-7": "七七四十九",
+  "1-8": "一八得八", "2-8": "二八十六", "3-8": "三八二十四", "4-8": "四八三十二", "5-8": "五八四十", "6-8": "六八四十八", "7-8": "七八五十六", "8-8": "八八六十四",
+  "1-9": "一九得九", "2-9": "二九十八", "3-9": "三九二十七", "4-9": "四九三十六", "5-9": "五九四十五", "6-9": "六九五十四", "7-9": "七九六十三", "8-9": "八九七十二", "9-9": "九九八十一"
+};
+
+var multiplyEmojis = ["🍎", "🌸", "⭐", "🎈", "🦋", "🍓", "🐱", "🍬", "🐟", "🌈"];
+
+function genMultiply() {
+  // 渐进难度：2和5最容易记（有规律），出现最多；其次3和4；最后6-9
+  var a = pickRandom([2, 2, 2, 5, 5, 5, 3, 3, 4, 4, 6, 7, 8, 9]);
+  var b = randInt(1, 9);
+  // 确保 a <= b（符合九九表惯例，不重复出 3×4 和 4×3）
+  if (a > b) { var t = a; a = b; b = t; }
+
+  var answer = a * b;
+  var rhymeKey = a + "-" + b;
+  var rhyme = multiplyRhymes[rhymeKey] || "";
+  var emoji = pickRandom(multiplyEmojis);
+
+  // 生成可视化：a 行，每行 b 个 emoji，帮助小朋友理解乘法含义
+  var rows = [];
+  for (var r = 0; r < a; r++) {
+    var rowStr = "";
+    for (var c = 0; c < b; c++) rowStr += emoji;
+    rows.push(rowStr);
+  }
+
+  // 生成干扰项（用接近的乘积或 ±a/±b 作为干扰）
+  var options = [answer];
+  while (options.length < 4) {
+    var fake = answer + pickRandom([-a, -b, a, b, randInt(-5, 5)]);
+    if (fake < 0) fake = Math.abs(fake);
+    if (fake !== answer && options.indexOf(fake) === -1) options.push(fake);
+  }
+
+  return {
+    type: "multiply",
+    text: a + " × " + b + " = ?",
+    hint: "口诀：" + rhyme,
+    answer: answer,
+    options: shuffle(options),
+    multiplyData: { rows: rows }
+  };
+}
+
+// ======== 位置与方向 ========
+function genPosition() {
+  var mode = randInt(0, 2);
+  if (mode === 0) {
+    // 看图判断上下左右
+    var items = pickRandom([["🍎", "🍊"], ["🌸", "⭐"], ["🐱", "🐶"], ["🎈", "🎁"]]);
+    var layouts = [
+      { rows: [items[0], items[1]], answer: "上面", q: items[0] + "在" + items[1] + "的___？" },
+      { rows: [items[1], items[0]], answer: "下面", q: items[0] + "在" + items[1] + "的___？" },
+      { rows: [items[0] + "  " + items[1]], answer: "左边", q: items[0] + "在" + items[1] + "的___？" },
+      { rows: [items[1] + "  " + items[0]], answer: "右边", q: items[0] + "在" + items[1] + "的___？" }
+    ];
+    var layout = pickRandom(layouts);
+    return {
+      type: "position",
+      text: layout.q,
+      hint: "看一看，选一选",
+      answer: layout.answer,
+      options: shuffle(["上面", "下面", "左边", "右边"]),
+      multiplyData: { rows: layout.rows }
+    };
+  } else if (mode === 1) {
+    // 排队问题
+    var total = randInt(5, 10);
+    var pos = randInt(2, total - 1);
+    var front = pos - 1;
+    var back = total - pos;
+    var askFront = Math.random() > 0.5;
+    if (askFront) {
+      return { type: "position", text: "小明排第" + pos + "个，一共" + total + "人", hint: "小明前面有几人？", answer: front, options: shuffle([front, back, total, pos]) };
+    } else {
+      return { type: "position", text: "小明排第" + pos + "个，一共" + total + "人", hint: "小明后面有几人？", answer: back, options: shuffle([back, front, total, pos]) };
+    }
+  } else {
+    var scenarios = [
+      { q: "写字拿笔通常用哪只手？", a: "右手", opts: ["左手", "右手"] },
+      { q: "吃饭拿筷子通常用哪只手？", a: "右手", opts: ["左手", "右手"] },
+      { q: "👈 这个箭头指向哪边？", a: "左边", opts: ["左边", "右边"] },
+      { q: "👉 这个箭头指向哪边？", a: "右边", opts: ["左边", "右边"] },
+      { q: "⬆️ 这个箭头指向哪边？", a: "上面", opts: ["上面", "下面"] },
+      { q: "⬇️ 这个箭头指向哪边？", a: "下面", opts: ["上面", "下面"] }
+    ];
+    var s = pickRandom(scenarios);
+    return { type: "position", text: s.q, hint: "想一想", answer: s.a, options: shuffle(s.opts) };
+  }
+}
+
+// ======== 连加连减 ========
+function genChainCalc() {
+  var mode = randInt(0, 2);
+  var a, b, c, answer, text;
+  if (mode === 0) {
+    a = randInt(1, 20); b = randInt(1, 20); c = randInt(1, 20);
+    answer = a + b + c;
+    text = a + " + " + b + " + " + c + " = ?";
+  } else if (mode === 1) {
+    a = randInt(10, 50); b = randInt(1, Math.floor(a / 2)); c = randInt(1, a - b);
+    answer = a - b - c;
+    text = a + " - " + b + " - " + c + " = ?";
+  } else {
+    a = randInt(5, 30); b = randInt(1, 20); c = randInt(1, a + b);
+    answer = a + b - c;
+    text = a + " + " + b + " - " + c + " = ?";
+  }
+  var options = [answer];
+  while (options.length < 4) {
+    var fake = answer + randInt(-8, 8);
+    if (fake < 0) fake = Math.abs(fake);
+    if (fake !== answer && options.indexOf(fake) === -1) options.push(fake);
+  }
+  return { type: "chaincalc", text: text, hint: "一步一步算哦", answer: answer, options: shuffle(options) };
+}
+
+// ======== 认识人民币 ========
+function genMoney() {
+  var mode = randInt(0, 2);
+  if (mode === 0) {
+    var bills = [
+      { desc: "红红的一张，上面写着100", answer: "100元" },
+      { desc: "绿绿的一张，上面写着50", answer: "50元" },
+      { desc: "蓝蓝的一张，上面写着10", answer: "10元" },
+      { desc: "棕色的一张，上面写着20", answer: "20元" },
+      { desc: "紫色的一张，上面写着5", answer: "5元" },
+      { desc: "金色硬币，上面写着壹圆", answer: "1元" }
+    ];
+    var b = pickRandom(bills);
+    var others = shuffle(bills.filter(function (x) { return x.answer !== b.answer; })).slice(0, 3).map(function (x) { return x.answer; });
+    return { type: "money", text: "💰 " + b.desc, hint: "这是多少钱？", answer: b.answer, options: shuffle([b.answer].concat(others)) };
+  } else if (mode === 1) {
+    var conversions = [
+      { q: "1元 = ?角", a: "10", opts: ["10", "5", "20", "100"] },
+      { q: "1角 = ?分", a: "10", opts: ["10", "5", "20", "100"] },
+      { q: "5角 = ?分", a: "50", opts: ["50", "5", "10", "500"] },
+      { q: "10角 = ?元", a: "1", opts: ["1", "10", "5", "100"] },
+      { q: "20角 = ?元", a: "2", opts: ["2", "20", "10", "5"] },
+      { q: "1元 = ?分", a: "100", opts: ["100", "10", "50", "1000"] }
+    ];
+    var c = pickRandom(conversions);
+    return { type: "money", text: c.q, hint: "想一想换算", answer: c.a, options: shuffle(c.opts) };
+  } else {
+    var price = pickRandom([2, 3, 5, 6, 8, 9, 10, 12, 15, 20]);
+    var pay = pickRandom([10, 20, 50]);
+    while (pay <= price) pay = pickRandom([10, 20, 50]);
+    var change = pay - price;
+    var options = [change];
+    while (options.length < 4) {
+      var fake = change + randInt(-5, 5);
+      if (fake >= 0 && fake !== change && options.indexOf(fake) === -1) options.push(fake);
+    }
+    return { type: "money", text: "文具盒" + price + "元，付了" + pay + "元", hint: "应该找回多少钱？", answer: change, options: shuffle(options) };
+  }
+}
+
+// ======== 数的组成 ========
+function genCompose() {
+  var mode = randInt(0, 2);
+  if (mode === 0) {
+    var num = randInt(11, 99);
+    var tens = Math.floor(num / 10);
+    var ones = num % 10;
+    var answer = tens + "个十和" + ones + "个一";
+    var options = [answer];
+    while (options.length < 4) {
+      var ft = randInt(1, 9), fo = randInt(0, 9);
+      var fake = ft + "个十和" + fo + "个一";
+      if (fake !== answer && options.indexOf(fake) === -1) options.push(fake);
+    }
+    return { type: "compose", text: num + " 里面有___？", hint: "想想十位和个位", answer: answer, options: shuffle(options) };
+  } else if (mode === 1) {
+    var tens2 = randInt(1, 9), ones2 = randInt(0, 9);
+    var answer2 = tens2 * 10 + ones2;
+    var options2 = [answer2];
+    while (options2.length < 4) {
+      var fake2 = answer2 + randInt(-9, 9);
+      if (fake2 > 0 && fake2 !== answer2 && options2.indexOf(fake2) === -1) options2.push(fake2);
+    }
+    return { type: "compose", text: tens2 + "个十和" + ones2 + "个一", hint: "组成多少？", answer: answer2, options: shuffle(options2) };
+  } else {
+    var num3 = randInt(11, 99);
+    var tens3 = Math.floor(num3 / 10), ones3 = num3 % 10;
+    if (Math.random() > 0.5) {
+      return { type: "compose", text: num3 + " 的十位是几？", hint: "十位上的数字", answer: tens3, options: shuffle([tens3, ones3, tens3 + ones3, tens3 * ones3 || 1]) };
+    } else {
+      return { type: "compose", text: num3 + " 的个位是几？", hint: "个位上的数字", answer: ones3, options: shuffle([ones3, tens3, tens3 + ones3, tens3 * ones3 || 1]) };
+    }
+  }
+}
+
+// ======== 分类与整理 ========
+function genClassify() {
+  var groups = [
+    { items: ["🍎", "🍌", "🍊", "🐱"], odd: "🐱" },
+    { items: ["🍎", "🍌", "🍊", "🥕"], odd: "🥕" },
+    { items: ["🐱", "🐶", "🐰", "🌸"], odd: "🌸" },
+    { items: ["⚽", "🏀", "🎾", "📚"], odd: "📚" },
+    { items: ["🚗", "🚕", "🚙", "🏠"], odd: "🏠" },
+    { items: ["👔", "👗", "👖", "🍕"], odd: "🍕" }
+  ];
+  var g = pickRandom(groups);
+  return { type: "classify", text: g.items.join("  "), hint: "哪一个和其它的不同类？", answer: g.odd, options: shuffle(g.items.slice()) };
+}
+
 // ======== 统一生成题目 ========
 var generators = {
   calc: genCalc,
@@ -270,7 +492,13 @@ var generators = {
   shape: genShape,
   clock: genClock,
   count: genCount,
-  pattern: genPattern
+  pattern: genPattern,
+  multiply: genMultiply,
+  position: genPosition,
+  chaincalc: genChainCalc,
+  money: genMoney,
+  compose: genCompose,
+  classify: genClassify
 };
 
 function generateQuestions(gameId) {
@@ -278,7 +506,21 @@ function generateQuestions(gameId) {
   if (!game) return [];
   var gen = generators[gameId];
   var questions = [];
-  for (var i = 0; i < game.total; i++) {
+  var seen = {};
+  var maxRetries = 50;
+  var retries = 0;
+  while (questions.length < game.total && retries < maxRetries) {
+    var q = gen();
+    var key = q.text + "|" + String(q.answer);
+    if (!seen[key]) {
+      seen[key] = true;
+      questions.push(q);
+    } else {
+      retries++;
+    }
+  }
+  // 如果实在凑不够不重复的，补充填满
+  while (questions.length < game.total) {
     questions.push(gen());
   }
   return questions;

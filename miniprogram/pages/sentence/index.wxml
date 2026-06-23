@@ -1,0 +1,55 @@
+<view class="sentence-page">
+  <!-- 进度 -->
+  <view class="progress-info">
+    <text class="progress-text">第 {{currentIndex + 1}} / {{total}} 题</text>
+    <text class="score-text">✅ {{score}}</text>
+  </view>
+
+  <!-- 题目 -->
+  <view class="question-card" wx:if="{{currentSentence}}">
+    <view class="q-emoji">{{currentSentence.emoji}}</view>
+    <view class="q-hint">请把下面的词语排成一句话：</view>
+
+    <!-- 已选区域（答案区） -->
+    <view class="answer-area">
+      <view
+        class="word-chip selected-chip"
+        wx:for="{{selectedWords}}"
+        wx:key="id"
+        bindtap="removeWord"
+        data-id="{{item.id}}"
+        style="background: {{currentSentence.color}}"
+      >
+        {{item.text}}
+      </view>
+      <view class="placeholder" wx:if="{{selectedWords.length === 0}}">点击下方词语排列</view>
+    </view>
+
+    <!-- 可选词语 -->
+    <view class="word-pool">
+      <view
+        class="word-chip {{item.used ? 'used' : ''}}"
+        wx:for="{{shuffledWords}}"
+        wx:key="id"
+        bindtap="selectWord"
+        data-id="{{item.id}}"
+      >
+        {{item.text}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-row" wx:if="{{!answered}}">
+    <view class="action-btn reset-btn" bindtap="resetQuestion">🔄 重排</view>
+    <view class="action-btn check-btn" style="background: {{currentSentence.color}}" bindtap="checkAnswer">✅ 提交</view>
+  </view>
+
+  <!-- 结果 -->
+  <view class="result-card {{isCorrect ? 'correct' : 'wrong'}}" wx:if="{{answered}}">
+    <view class="result-icon">{{isCorrect ? '🎉' : '😅'}}</view>
+    <view class="result-text">{{isCorrect ? '太棒了！' : '再想想哦～'}}</view>
+    <view class="correct-answer" wx:if="{{!isCorrect}}">正确答案：{{currentSentence.answer}}</view>
+    <view class="next-btn" style="background: {{currentSentence.color}}" bindtap="nextQuestion">下一题 ➡️</view>
+  </view>
+</view>

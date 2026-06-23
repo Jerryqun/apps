@@ -1,0 +1,52 @@
+<view class="radicals-page">
+  <!-- 偏旁选择 -->
+  <scroll-view class="tab-scroll" scroll-x>
+    <view class="tab-bar">
+      <view
+        class="tab-item {{currentRadical.id === item.id ? 'active' : ''}}"
+        wx:for="{{radicals}}"
+        wx:key="id"
+        bindtap="switchRadical"
+        data-id="{{item.id}}"
+        style="{{currentRadical.id === item.id ? 'background:' + item.color + ';color:#fff' : ''}}"
+      >
+        {{item.radical}} {{item.name}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 偏旁展示卡 -->
+  <view class="radical-card" wx:if="{{currentRadical}}" style="border-color: {{currentRadical.color}}" bindtap="readRadicalName">
+    <view class="radical-big" style="color: {{currentRadical.color}}">{{currentRadical.radical}}</view>
+    <view class="radical-name">{{currentRadical.name}}</view>
+    <view class="radical-pinyin">{{currentRadical.pinyin}}</view>
+    <view class="radical-meaning">{{currentRadical.meaning}}</view>
+    <view class="tap-sound">🔊 点击听发音</view>
+  </view>
+
+  <!-- 例字列表 -->
+  <view class="section-title" wx:if="{{currentRadical}}">含「{{currentRadical.radical}}」的字</view>
+  <view class="example-grid" wx:if="{{currentRadical}}">
+    <view
+      class="example-card"
+      wx:for="{{currentRadical.examples}}"
+      wx:key="char"
+      style="border-left: 6rpx solid {{currentRadical.color}}"
+      bindtap="readChar"
+      data-char="{{item.char}}"
+    >
+      <view class="ex-top">
+        <text class="ex-emoji">{{item.emoji}}</text>
+        <text class="ex-char">{{item.char}}</text>
+      </view>
+      <view class="ex-pinyin">{{item.pinyin}}</view>
+      <view class="ex-meaning">{{item.meaning}}</view>
+    </view>
+  </view>
+
+  <!-- 翻页 -->
+  <view class="nav-row">
+    <view class="nav-btn {{currentIndex === 0 ? 'disabled' : ''}}" bindtap="prev">⬅️ 上一个</view>
+    <view class="nav-btn nav-btn-primary" style="background: {{currentRadical.color}}" bindtap="next">下一个 ➡️</view>
+  </view>
+</view>

@@ -1,0 +1,166 @@
+.poems-page {
+  min-height: 100vh;
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.poem-tabs {
+  white-space: nowrap;
+  margin-bottom: 24rpx;
+}
+
+.tab-bar {
+  display: inline-flex;
+  gap: 12rpx;
+  padding: 4rpx 0;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  white-space: nowrap;
+}
+
+.tab-item.active {
+  font-weight: bold;
+}
+
+.poem-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 36rpx 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+  margin-bottom: 24rpx;
+}
+
+.poem-header {
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.poem-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.poem-author {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 8rpx;
+}
+
+.poem-tip {
+  font-size: 22rpx;
+  color: #FF8A65;
+  margin-top: 8rpx;
+}
+
+.poem-body {
+  text-align: center;
+  margin-bottom: 24rpx;
+}
+
+.poem-line {
+  margin-bottom: 20rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 12rpx;
+}
+
+.poem-line:active {
+  background: #F3E5F5;
+}
+
+.line-pinyin {
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 4rpx;
+  letter-spacing: 2rpx;
+}
+
+.line-text {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 4rpx;
+}
+
+.poem-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32rpx;
+  margin-bottom: 20rpx;
+}
+
+.pinyin-toggle {
+  font-size: 24rpx;
+  color: #42A5F5;
+  padding: 12rpx;
+}
+
+.read-btn {
+  font-size: 24rpx;
+  color: #fff;
+  background: #FF8A65;
+  padding: 10rpx 24rpx;
+  border-radius: 24rpx;
+}
+
+.read-btn:active {
+  opacity: 0.7;
+}
+
+.poem-meaning {
+  background: #FFF8E1;
+  border-radius: 16rpx;
+  padding: 20rpx;
+}
+
+.meaning-label {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #5d4037;
+  margin-bottom: 8rpx;
+}
+
+.meaning-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+}
+
+.nav-row {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 20rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  background: #90A4AE;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.12);
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.nav-btn.disabled {
+  opacity: 0.5;
+}
+
+.nav-primary {
+  background: #42A5F5;
+}

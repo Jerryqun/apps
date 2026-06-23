@@ -103,6 +103,80 @@ var categories = [
       { word: "pear", meaning: "梨", emoji: "🍐" },
       { word: "watermelon", meaning: "西瓜", emoji: "🍉" }
     ]
+  },
+  {
+    id: "greeting",
+    name: "问候语",
+    icon: "👋",
+    color: "#26A69A",
+    desc: "Greetings",
+    list: [
+      { word: "hello", meaning: "你好", emoji: "👋" },
+      { word: "hi", meaning: "嗨", emoji: "🙋" },
+      { word: "good morning", meaning: "早上好", emoji: "🌅" },
+      { word: "good night", meaning: "晚安", emoji: "🌙" },
+      { word: "goodbye", meaning: "再见", emoji: "👋" },
+      { word: "thank you", meaning: "谢谢", emoji: "🙏" },
+      { word: "sorry", meaning: "对不起", emoji: "😔" },
+      { word: "please", meaning: "请", emoji: "🤲" },
+      { word: "yes", meaning: "是", emoji: "✅" },
+      { word: "no", meaning: "不", emoji: "❌" }
+    ]
+  },
+  {
+    id: "family",
+    name: "家庭成员",
+    icon: "👨‍👩‍👧",
+    color: "#5C6BC0",
+    desc: "Family",
+    list: [
+      { word: "father", meaning: "爸爸", emoji: "👨" },
+      { word: "mother", meaning: "妈妈", emoji: "👩" },
+      { word: "brother", meaning: "哥哥/弟弟", emoji: "👦" },
+      { word: "sister", meaning: "姐姐/妹妹", emoji: "👧" },
+      { word: "grandfather", meaning: "爷爷/外公", emoji: "👴" },
+      { word: "grandmother", meaning: "奶奶/外婆", emoji: "👵" },
+      { word: "baby", meaning: "宝宝", emoji: "👶" },
+      { word: "friend", meaning: "朋友", emoji: "🤝" }
+    ]
+  },
+  {
+    id: "body",
+    name: "身体部位",
+    icon: "🧍",
+    color: "#EF5350",
+    desc: "Body Parts",
+    list: [
+      { word: "head", meaning: "头", emoji: "🧠" },
+      { word: "eye", meaning: "眼睛", emoji: "👁️" },
+      { word: "ear", meaning: "耳朵", emoji: "👂" },
+      { word: "nose", meaning: "鼻子", emoji: "👃" },
+      { word: "mouth", meaning: "嘴巴", emoji: "👄" },
+      { word: "hand", meaning: "手", emoji: "✋" },
+      { word: "foot", meaning: "脚", emoji: "🦶" },
+      { word: "arm", meaning: "手臂", emoji: "💪" },
+      { word: "leg", meaning: "腿", emoji: "🦵" },
+      { word: "face", meaning: "脸", emoji: "😊" }
+    ]
+  },
+  {
+    id: "sentence",
+    name: "简单句型",
+    icon: "💬",
+    color: "#FF7043",
+    desc: "Simple Sentences",
+    list: [
+      { word: "I am happy.", meaning: "我很开心。", emoji: "😊" },
+      { word: "What is this?", meaning: "这是什么？", emoji: "❓" },
+      { word: "This is a cat.", meaning: "这是一只猫。", emoji: "🐱" },
+      { word: "I like apples.", meaning: "我喜欢苹果。", emoji: "🍎" },
+      { word: "How are you?", meaning: "你好吗？", emoji: "👋" },
+      { word: "I am fine.", meaning: "我很好。", emoji: "👍" },
+      { word: "Thank you!", meaning: "谢谢你！", emoji: "🙏" },
+      { word: "Let's play!", meaning: "我们一起玩吧！", emoji: "🎮" },
+      { word: "I can do it.", meaning: "我能做到。", emoji: "💪" },
+      { word: "Good job!", meaning: "做得好！", emoji: "🌟" }
+    ]
   }
 ];
 

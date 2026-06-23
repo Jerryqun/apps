@@ -1,0 +1,162 @@
+.radicals-page {
+  min-height: 100vh;
+  padding: 20rpx 24rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.tab-scroll {
+  white-space: nowrap;
+  margin-bottom: 24rpx;
+}
+
+.tab-bar {
+  display: inline-flex;
+  gap: 12rpx;
+  padding: 4rpx 0;
+}
+
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
+  color: #666;
+  background: #f5f5f5;
+  white-space: nowrap;
+}
+
+.tab-item.active {
+  font-weight: bold;
+}
+
+.radical-card {
+  text-align: center;
+  padding: 40rpx 24rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  border: 4rpx solid #ccc;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+  margin-bottom: 28rpx;
+}
+
+.radical-big {
+  font-size: 120rpx;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.radical-name {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-top: 12rpx;
+}
+
+.radical-pinyin {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 8rpx;
+}
+
+.radical-meaning {
+  font-size: 28rpx;
+  color: #555;
+  margin-top: 8rpx;
+  padding: 6rpx 20rpx;
+  background: #FFF8E1;
+  border-radius: 20rpx;
+  display: inline-block;
+}
+
+.tap-sound {
+  margin-top: 12rpx;
+  font-size: 22rpx;
+  color: #FF8A65;
+}
+
+.example-card:active {
+  background: #FFF8E1;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5d4037;
+  margin-bottom: 16rpx;
+}
+
+.example-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 28rpx;
+}
+
+.example-card {
+  width: calc(50% - 8rpx);
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.ex-top {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.ex-emoji {
+  font-size: 36rpx;
+}
+
+.ex-char {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.ex-pinyin {
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 6rpx;
+}
+
+.ex-meaning {
+  font-size: 24rpx;
+  color: #666;
+  margin-top: 4rpx;
+}
+
+.nav-row {
+  display: flex;
+  gap: 24rpx;
+  margin-top: 20rpx;
+  padding: 0 12rpx;
+}
+
+.nav-btn {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  background: #90A4AE;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.12);
+}
+
+.nav-btn:active {
+  transform: scale(0.96);
+}
+
+.nav-btn.disabled {
+  opacity: 0.5;
+}
+
+.nav-btn-primary {
+  background: #42A5F5;
+}
