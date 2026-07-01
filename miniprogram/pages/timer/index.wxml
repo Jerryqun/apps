@@ -1,0 +1,24 @@
+<view class="timer-page">
+  <view class="status-text">{{statusText}}</view>
+
+  <view class="circle-wrap">
+    <view class="circle-bg"></view>
+    <view class="circle-progress" style="background: conic-gradient({{status == 'resting' ? '#66BB6A' : '#EC407A'}} {{progress}}%, #eee {{progress}}%)"></view>
+    <view class="circle-inner">
+      <view class="time-display">{{displayTime}}</view>
+    </view>
+  </view>
+
+  <view class="today-stat">今日已专注 {{todayCount}} 次 🍅</view>
+
+  <view class="btn-wrap">
+    <view class="action-btn {{status == 'studying' ? 'cancel' : ''}}" bindtap="startTimer">
+      {{btnText}}
+    </view>
+  </view>
+
+  <view class="tips-card">
+    <view class="tips-title">专注小贴士</view>
+    <view class="tips-content">学习20分钟，休息5分钟。坐直身体，眼睛离书本一尺远哦！</view>
+  </view>
+</view>

@@ -1,0 +1,27 @@
+<view class="habits-page">
+  <view class="header-card">
+    <view class="date-text">{{todayStr}} 好习惯</view>
+    <view class="progress-text">已完成 {{doneCount}}/{{totalCount}}</view>
+    <view class="progress-bar">
+      <view class="progress-inner" style="width: {{totalCount ? (doneCount / totalCount * 100) : 0}}%"></view>
+    </view>
+  </view>
+
+  <view class="habit-list">
+    <view
+      class="habit-item {{item.done ? 'done' : ''}}"
+      wx:for="{{habits}}"
+      wx:key="id"
+      bindtap="toggleHabit"
+      data-id="{{item.id}}"
+    >
+      <view class="habit-icon">{{item.icon}}</view>
+      <view class="habit-name">{{item.name}}</view>
+      <view class="habit-check">{{item.done ? '✅' : '⬜'}}</view>
+    </view>
+  </view>
+
+  <view class="tip-text" wx:if="{{doneCount >= totalCount}}">
+    🎉 太棒了！今天全部完成！
+  </view>
+</view>

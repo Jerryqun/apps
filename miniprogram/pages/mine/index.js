@@ -1,6 +1,14 @@
 const hanziData = require("../../data/hanzi.js");
+const mathData = require("../../data/math.js");
 const speaker = require("../../utils/speak.js");
 const user = require("../../utils/user.js");
+
+// 按难度分组数学游戏
+const MATH_TIERS = {
+  easy: ["calc", "compare", "count", "shape", "clock", "position"],
+  medium: ["pattern", "money", "compose", "multiply", "classify", "chaincalc"],
+  hard: ["solid", "tenmethod", "wordproblem"]
+};
 
 Page({
   data: {
@@ -30,6 +38,9 @@ Page({
 
   onShow: function () {
     this.refresh();
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 3 });
+    }
   },
 
   onUnload: function () {
@@ -62,14 +73,27 @@ Page({
   refresh: function () {
     const learned = wx.getStorageSync("learnedChars") || [];
     const favorites = wx.getStorageSync("favoriteChars") || [];
+
+    // 汇总各难度游戏的最佳分数
+    var mathEasy = 0, mathMedium = 0, mathHard = 0;
+    MATH_TIERS.easy.forEach(function (gid) {
+      mathEasy += (wx.getStorageSync("mathBest_" + gid) || 0);
+    });
+    MATH_TIERS.medium.forEach(function (gid) {
+      mathMedium += (wx.getStorageSync("mathBest_" + gid) || 0);
+    });
+    MATH_TIERS.hard.forEach(function (gid) {
+      mathHard += (wx.getStorageSync("mathBest_" + gid) || 0);
+    });
+
     this.setData({
       learnedCount: learned.length,
       favoriteChars: favorites,
       bestScore: wx.getStorageSync("quizBestScore") || 0,
       playCount: wx.getStorageSync("quizPlayCount") || 0,
-      mathEasy: wx.getStorageSync("mathBest_easy") || 0,
-      mathMedium: wx.getStorageSync("mathBest_medium") || 0,
-      mathHard: wx.getStorageSync("mathBest_hard") || 0
+      mathEasy: mathEasy,
+      mathMedium: mathMedium,
+      mathHard: mathHard
     });
   },
 
@@ -169,6 +193,10 @@ Page({
     wx.switchTab({ url: "/pages/home/index" });
   },
 
+  goBadges: function () {
+    wx.navigateTo({ url: "/pages/badges/index" });
+  },
+
   clearProgress: function () {
     wx.showModal({
       title: "确认重置",
@@ -179,9 +207,11 @@ Page({
           wx.setStorageSync("favoriteChars", []);
           wx.setStorageSync("quizBestScore", 0);
           wx.setStorageSync("quizPlayCount", 0);
-          wx.setStorageSync("mathBest_easy", 0);
-          wx.setStorageSync("mathBest_medium", 0);
-          wx.setStorageSync("mathBest_hard", 0);
+          // 清空所有数学游戏分数
+          var allGames = MATH_TIERS.easy.concat(MATH_TIERS.medium).concat(MATH_TIERS.hard);
+          allGames.forEach(function (gid) {
+            wx.setStorageSync("mathBest_" + gid, 0);
+          });
           this.refresh();
           // 同步清空到云端
           user.syncToCloud();

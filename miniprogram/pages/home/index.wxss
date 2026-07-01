@@ -1,6 +1,6 @@
 .home {
   min-height: 100vh;
-  padding: 24rpx 28rpx 40rpx;
+  padding: 24rpx 28rpx 220rpx;
   box-sizing: border-box;
 }
 
@@ -85,6 +85,106 @@
 .check-btn:active { transform: scale(0.96); }
 .check-btn-done {
   background: linear-gradient(135deg, #A5D6A7, #66BB6A);
+}
+.history-btn {
+  text-align: center;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #999;
+  padding: 8rpx 0;
+}
+.history-btn:active {
+  color: #666;
+}
+
+/* ========= 月历打卡记录 ========= */
+.calendar-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin-bottom: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.cal-arrow {
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #999;
+  border-radius: 50%;
+}
+.cal-arrow:active {
+  background: #f5f5f5;
+}
+.cal-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5D4037;
+}
+.cal-summary {
+  text-align: center;
+  font-size: 24rpx;
+  color: #888;
+  margin-bottom: 16rpx;
+}
+.cal-count {
+  color: #FF6D00;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.cal-weekbar {
+  display: flex;
+  margin-bottom: 8rpx;
+}
+.cal-wk {
+  flex: 1;
+  text-align: center;
+  font-size: 22rpx;
+  color: #aaa;
+  font-weight: bold;
+}
+.cal-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cal-cell {
+  width: 14.2857%;
+  height: 68rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  color: #666;
+  position: relative;
+}
+.cal-checked {
+  color: #FF6D00;
+  font-weight: bold;
+}
+.cal-checked::after {
+  content: '';
+  position: absolute;
+  bottom: 4rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10rpx;
+  height: 10rpx;
+  background: #FFB300;
+  border-radius: 50%;
+}
+.cal-today {
+  background: #FFF3E0;
+  border-radius: 50%;
+  width: 56rpx;
+  height: 56rpx;
+  margin: 6rpx calc((14.2857% - 56rpx) / 2);
 }
 
 /* ========= 快捷入口 ========= */

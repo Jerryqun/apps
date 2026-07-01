@@ -1,0 +1,79 @@
+.habits-page {
+  min-height: 100vh;
+  padding: 24rpx 28rpx;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #E0F7FA 0%, #FFF8E1 100%);
+}
+.header-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.date-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #00838F;
+}
+.progress-text {
+  font-size: 24rpx;
+  color: #666;
+  margin: 12rpx 0;
+}
+.progress-bar {
+  height: 16rpx;
+  background: #e0e0e0;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+.progress-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #26C6DA, #00838F);
+  border-radius: 8rpx;
+  transition: width 0.4s ease;
+}
+.habit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+.habit-item {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
+}
+.habit-item.done {
+  background: #E8F5E9;
+  border: 2rpx solid #A5D6A7;
+}
+.habit-icon {
+  font-size: 40rpx;
+  margin-right: 20rpx;
+}
+.habit-name {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+.habit-item.done .habit-name {
+  color: #2E7D32;
+}
+.habit-check {
+  font-size: 36rpx;
+}
+.tip-text {
+  text-align: center;
+  font-size: 30rpx;
+  color: #FF6F00;
+  font-weight: bold;
+  margin-top: 32rpx;
+  padding: 20rpx;
+  background: #FFF3E0;
+  border-radius: 16rpx;
+}

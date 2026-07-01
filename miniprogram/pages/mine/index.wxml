@@ -7,6 +7,15 @@
     <view class="edit-hint">👆 点击设置头像昵称</view>
   </view>
 
+  <!-- 重置按钮（紧凑放在头部下方） -->
+  <view class="reset-link" bindtap="clearProgress">重置进度</view>
+
+  <!-- 成就徽章入口 -->
+  <view class="badge-entry" bindtap="goBadges">
+    <view class="badge-entry-left">🏅 我的成就徽章</view>
+    <view class="badge-entry-right">查看 ›</view>
+  </view>
+
   <!-- 语文成绩 -->
   <view class="section-card card">
     <view class="block-title">📖 语文</view>
@@ -62,9 +71,6 @@
       </view>
     </view>
   </view>
-
-  <!-- 重置 -->
-  <view class="reset-btn" bindtap="clearProgress">重置我的进度</view>
 
   <!-- 资料编辑弹窗 -->
   <view wx:if="{{showProfileEditor}}" class="modal-mask" catchtap="closeProfileEditor">

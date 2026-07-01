@@ -13,6 +13,14 @@
     "pages/radicals/index",
     "pages/poems/index",
     "pages/sentence/index",
+    "pages/strokes/index",
+    "pages/antonym/index",
+    "pages/classifier/index",
+    "pages/picture-talk/index",
+    "pages/riddles/index",
+    "pages/habits/index",
+    "pages/timer/index",
+    "pages/badges/index",
     "pages/index/index",
     "pages/example/index"
   ],
@@ -24,6 +32,7 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
+    "custom": true,
     "color": "#999999",
     "selectedColor": "#FF8A65",
     "backgroundColor": "#FFFFFF",

@@ -1,4 +1,4 @@
-.practice { min-height: 100vh; padding: 40rpx 32rpx; box-sizing: border-box; }
+.practice { min-height: 100vh; padding: 40rpx 32rpx 220rpx; box-sizing: border-box; }
 .section-title { font-size: 36rpx; font-weight: bold; color: #5d4037; margin-bottom: 32rpx; }
 .entry-list { display: flex; flex-direction: column; gap: 28rpx; }
 .entry-card { display: flex; align-items: center; padding: 36rpx 28rpx; background: #fff; border-radius: 24rpx; box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.08); }

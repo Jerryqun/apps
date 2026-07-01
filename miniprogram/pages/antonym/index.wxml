@@ -1,0 +1,35 @@
+<view class="container">
+  <!-- 游戏进行中 -->
+  <view class="game" wx:if="{{!finished}}">
+    <view class="progress">第 {{currentIndex + 1}} / {{total}} 题</view>
+    <view class="score-bar">得分：{{score}}</view>
+
+    <view class="question-card">
+      <view class="question-emoji">{{current.emoji}}</view>
+      <view class="question-text">「{{current.word}}」的反义词是？</view>
+    </view>
+
+    <view class="options">
+      <view class="option {{answered && item === current.answer ? 'correct' : ''}} {{answered && item === selectedOption && item !== current.answer ? 'wrong' : ''}}"
+        wx:for="{{current.options}}" wx:key="*this"
+        data-option="{{item}}" bindtap="selectOption">
+        {{item}}
+      </view>
+    </view>
+
+    <view class="feedback" wx:if="{{answered}}">
+      <view class="feedback-text {{isCorrect ? 'correct-text' : 'wrong-text'}}">
+        {{isCorrect ? '答对啦！' : '答错了，正确答案是「' + current.answer + '」'}}
+      </view>
+      <view class="next-btn" bindtap="nextQuestion">下一题</view>
+    </view>
+  </view>
+
+  <!-- 结束 -->
+  <view class="result" wx:if="{{finished}}">
+    <view class="result-icon">🎉</view>
+    <view class="result-text">全部完成！</view>
+    <view class="result-score">答对 {{score}} / {{total}} 题</view>
+    <view class="restart-btn" bindtap="restart">再来一次</view>
+  </view>
+</view>

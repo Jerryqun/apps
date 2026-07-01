@@ -1,0 +1,38 @@
+<view class="container">
+  <!-- 笔画列表 -->
+  <view class="stroke-list" wx:if="{{!current}}">
+    <view class="page-title">基本笔画</view>
+    <view class="stroke-grid">
+      <view class="stroke-card" wx:for="{{strokes}}" wx:key="id" bindtap="selectStroke" data-id="{{item.id}}">
+        <view class="stroke-symbol">{{item.symbol}}</view>
+        <view class="stroke-name">{{item.name}}</view>
+        <view class="stroke-pinyin">{{item.pinyin}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 笔画详情 -->
+  <view class="stroke-detail" wx:if="{{current}}">
+    <view class="detail-header">
+      <view class="big-symbol" bindtap="readName">{{current.symbol}}</view>
+      <view class="detail-info">
+        <view class="detail-name">{{current.name}}（{{current.pinyin}}）</view>
+        <view class="detail-desc">{{current.desc}}</view>
+        <view class="detail-mnemonic">口诀：{{current.mnemonic}}</view>
+      </view>
+    </view>
+
+    <view class="examples-title">例字（点击可发音）</view>
+    <view class="examples-list">
+      <view class="example-item" wx:for="{{current.examples}}" wx:key="char" bindtap="readChar" data-char="{{item.char}}">
+        <view class="example-char">{{item.char}}</view>
+        <view class="example-info">
+          <view class="example-strokes">共{{item.strokes}}画</view>
+          <view class="example-order">{{item.order}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="back-btn" bindtap="goBack">返回列表</view>
+  </view>
+</view>

@@ -15,6 +15,9 @@ Page({
   onShow: function () {
     var learned = wx.getStorageSync("learnedChars") || [];
     this.setData({ learnedCount: learned.length });
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 1 });
+    }
   },
 
   fetchCategories: function () {
@@ -73,5 +76,9 @@ Page({
 
   goSentence: function () {
     wx.navigateTo({ url: "/pages/sentence/index" });
+  },
+
+  goStrokes: function () {
+    wx.navigateTo({ url: "/pages/strokes/index" });
   }
 });

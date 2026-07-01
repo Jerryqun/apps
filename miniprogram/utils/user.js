@@ -14,17 +14,34 @@ const STORAGE_KEYS = {
   favorite: "favoriteChars",
   bestScore: "quizBestScore",
   playCount: "quizPlayCount",
-  checkLog: "checkLog"
+  checkLog: "checkLog",
+  habitsLog: "habitsLog",
+  focusLog: "focusLog"
 };
+
+// 数学游戏 ID 列表（与 math.js 保持一致）
+const MATH_GAME_IDS = [
+  "calc", "compare", "shape", "clock", "count", "pattern",
+  "multiply", "position", "chaincalc", "money", "compose",
+  "classify", "solid", "tenmethod", "wordproblem"
+];
 
 // 读取本地学习数据
 function readLocalData() {
+  var mathScores = {};
+  MATH_GAME_IDS.forEach(function (gid) {
+    var v = wx.getStorageSync("mathBest_" + gid) || 0;
+    if (v > 0) mathScores[gid] = v;
+  });
   return {
     learnedChars: wx.getStorageSync(STORAGE_KEYS.learned) || [],
     favoriteChars: wx.getStorageSync(STORAGE_KEYS.favorite) || [],
     quizBestScore: wx.getStorageSync(STORAGE_KEYS.bestScore) || 0,
     quizPlayCount: wx.getStorageSync(STORAGE_KEYS.playCount) || 0,
-    checkLog: wx.getStorageSync(STORAGE_KEYS.checkLog) || {}
+    checkLog: wx.getStorageSync(STORAGE_KEYS.checkLog) || {},
+    mathScores: mathScores,
+    habitsLog: wx.getStorageSync(STORAGE_KEYS.habitsLog) || {},
+    focusLog: wx.getStorageSync(STORAGE_KEYS.focusLog) || {}
   };
 }
 
@@ -41,6 +58,37 @@ function writeLocalData(userData) {
   Object.keys(localCheckLog).forEach(function (k) { merged[k] = true; });
   Object.keys(cloudCheckLog).forEach(function (k) { merged[k] = true; });
   wx.setStorageSync(STORAGE_KEYS.checkLog, merged);
+  // 数学分数合并（取云端和本地较大值）
+  var cloudMath = userData.mathScores || {};
+  MATH_GAME_IDS.forEach(function (gid) {
+    var local = wx.getStorageSync("mathBest_" + gid) || 0;
+    var cloud = cloudMath[gid] || 0;
+    wx.setStorageSync("mathBest_" + gid, Math.max(local, cloud));
+  });
+  // 习惯打卡记录合并（每天的列表取并集）
+  var localHabits = wx.getStorageSync(STORAGE_KEYS.habitsLog) || {};
+  var cloudHabits = userData.habitsLog || {};
+  var mergedHabits = {};
+  var allHabitDays = Object.keys(localHabits).concat(Object.keys(cloudHabits));
+  allHabitDays.forEach(function (day) {
+    var localArr = localHabits[day] || [];
+    var cloudArr = cloudHabits[day] || [];
+    var merged = localArr.slice();
+    cloudArr.forEach(function (id) {
+      if (merged.indexOf(id) === -1) merged.push(id);
+    });
+    mergedHabits[day] = merged;
+  });
+  wx.setStorageSync(STORAGE_KEYS.habitsLog, mergedHabits);
+  // 专注记录合并（每天取较大值）
+  var localFocus = wx.getStorageSync(STORAGE_KEYS.focusLog) || {};
+  var cloudFocus = userData.focusLog || {};
+  var mergedFocus = {};
+  var allFocusDays = Object.keys(localFocus).concat(Object.keys(cloudFocus));
+  allFocusDays.forEach(function (day) {
+    mergedFocus[day] = Math.max(localFocus[day] || 0, cloudFocus[day] || 0);
+  });
+  wx.setStorageSync(STORAGE_KEYS.focusLog, mergedFocus);
 }
 
 // 调用云函数的统一封装，返回 Promise

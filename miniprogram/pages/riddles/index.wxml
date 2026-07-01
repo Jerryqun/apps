@@ -1,0 +1,36 @@
+<view class="container">
+  <view class="game" wx:if="{{!finished}}">
+    <view class="progress">第 {{currentIndex + 1}} / {{total}} 题</view>
+    <view class="score-bar">得分：{{score}}</view>
+
+    <view class="riddle-card">
+      <view class="riddle-icon">🧩</view>
+      <view class="riddle-text">{{current.riddle}}</view>
+      <view class="hint-btn" bindtap="toggleHint">{{showHint ? '隐藏提示' : '看提示'}}</view>
+      <view class="hint-text" wx:if="{{showHint}}">提示：{{current.hint}}</view>
+    </view>
+
+    <view class="options">
+      <view class="option {{answered && item === current.answer ? 'correct' : ''}} {{answered && item === selectedOption && item !== current.answer ? 'wrong' : ''}}"
+        wx:for="{{current.options}}" wx:key="*this"
+        data-option="{{item}}" bindtap="selectOption">
+        {{item}}
+      </view>
+    </view>
+
+    <view class="feedback" wx:if="{{answered}}">
+      <view class="feedback-text {{isCorrect ? 'correct-text' : 'wrong-text'}}">
+        {{isCorrect ? '太聪明了！' : '答案是「' + current.answer + '」'}}
+      </view>
+      <view class="explain-text">解释：{{current.explain}}</view>
+      <view class="next-btn" bindtap="nextQuestion">下一题</view>
+    </view>
+  </view>
+
+  <view class="result" wx:if="{{finished}}">
+    <view class="result-icon">🧠</view>
+    <view class="result-text">全部完成！</view>
+    <view class="result-score">答对 {{score}} / {{total}} 题</view>
+    <view class="restart-btn" bindtap="restart">再来一次</view>
+  </view>
+</view>

@@ -1,57 +1,58 @@
 .mine {
-  min-height: 100vh;
-  padding: 40rpx 32rpx 60rpx;
+  height: 100vh;
+  padding: 24rpx 28rpx 160rpx;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .mine-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
 }
 
 .avatar {
-  width: 140rpx;
-  height: 140rpx;
-  line-height: 140rpx;
+  width: 110rpx;
+  height: 110rpx;
+  line-height: 110rpx;
   text-align: center;
-  font-size: 90rpx;
+  font-size: 70rpx;
   background: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 6rpx 18rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4rpx 14rpx rgba(0, 0, 0, 0.1);
 }
 
 .avatar-img {
-  width: 140rpx;
-  height: 140rpx;
+  width: 110rpx;
+  height: 110rpx;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 6rpx 18rpx rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4rpx 14rpx rgba(0, 0, 0, 0.1);
 }
 
 .hello {
-  margin-top: 20rpx;
-  font-size: 40rpx;
+  margin-top: 12rpx;
+  font-size: 34rpx;
   font-weight: bold;
   color: #5d4037;
 }
 
 .edit-hint {
-  margin-top: 8rpx;
-  font-size: 24rpx;
+  margin-top: 4rpx;
+  font-size: 22rpx;
   color: #bcaaa4;
 }
 
 .section-card {
-  padding: 28rpx 24rpx;
-  margin-bottom: 24rpx;
+  padding: 20rpx 20rpx;
+  margin-bottom: 16rpx;
 }
 
 .stat-row {
   display: flex;
   justify-content: space-around;
-  margin-bottom: 20rpx;
+  margin-bottom: 14rpx;
 }
 
 .stat-item {
@@ -61,66 +62,66 @@
 }
 
 .stat-num {
-  font-size: 48rpx;
+  font-size: 40rpx;
   font-weight: bold;
   color: #ff8a65;
 }
 
 .stat-label {
-  margin-top: 6rpx;
-  font-size: 22rpx;
+  margin-top: 4rpx;
+  font-size: 20rpx;
   color: #8d6e63;
 }
 
 .block-title {
-  font-size: 32rpx;
+  font-size: 28rpx;
   font-weight: bold;
   color: #5d4037;
-  margin-bottom: 20rpx;
+  margin-bottom: 14rpx;
 }
 
 .progress-bar {
-  height: 28rpx;
+  height: 20rpx;
   background: #f0f0f0;
-  border-radius: 14rpx;
+  border-radius: 10rpx;
   overflow: hidden;
 }
 
 .progress-inner {
   height: 100%;
   background: linear-gradient(90deg, #ffd54f, #ff8a65);
-  border-radius: 14rpx;
+  border-radius: 10rpx;
   transition: width 0.6s ease;
 }
 
 .progress-label {
-  margin-top: 20rpx;
-  font-size: 26rpx;
+  margin-top: 12rpx;
+  font-size: 24rpx;
   color: #a1887f;
 }
 
 .fav-block {
-  padding: 32rpx;
-  margin-bottom: 40rpx;
+  padding: 20rpx;
+  margin-bottom: 0;
 }
 
 .fav-empty {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #a1887f;
   text-align: center;
-  padding: 20rpx 0;
+  padding: 12rpx 0;
 }
 
 .go-learn-btn {
-  margin: 32rpx auto 0;
-  width: 280rpx;
-  height: 80rpx;
-  line-height: 80rpx;
+  margin: 16rpx auto 0;
+  width: 240rpx;
+  height: 64rpx;
+  line-height: 64rpx;
   text-align: center;
   background: #ff8a65;
   color: #ffffff;
-  border-radius: 40rpx;
-  font-size: 30rpx;
+  border-radius: 32rpx;
+  font-size: 26rpx;
   font-weight: bold;
 }
 
@@ -131,46 +132,64 @@
 
 .fav-item {
   position: relative;
-  width: 120rpx;
-  height: 120rpx;
-  margin: 0 20rpx 20rpx 0;
+  width: 90rpx;
+  height: 90rpx;
+  margin: 0 14rpx 14rpx 0;
   background: #fff3e0;
-  border-radius: 24rpx;
+  border-radius: 20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .fav-char {
-  font-size: 64rpx;
+  font-size: 48rpx;
   font-weight: bold;
   color: #5d4037;
 }
 
 .fav-remove {
   position: absolute;
-  top: -12rpx;
-  right: -12rpx;
-  width: 40rpx;
-  height: 40rpx;
-  line-height: 40rpx;
+  top: -8rpx;
+  right: -8rpx;
+  width: 32rpx;
+  height: 32rpx;
+  line-height: 32rpx;
   text-align: center;
   background: #ef5350;
   color: #ffffff;
   border-radius: 50%;
-  font-size: 24rpx;
+  font-size: 20rpx;
 }
 
 .reset-btn {
-  margin: 20rpx auto 0;
-  width: 360rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: #bcaaa4;
-  border: 2rpx solid #d7ccc8;
-  border-radius: 40rpx;
+  display: none;
+}
+.reset-link {
+  text-align: right;
+  font-size: 24rpx;
+  color: #bbb;
+  margin-bottom: 12rpx;
+  padding-right: 8rpx;
+}
+.badge-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFDE7;
+  border-radius: 16rpx;
+  padding: 16rpx 20rpx;
+  margin-bottom: 16rpx;
+  border: 2rpx solid #FFE082;
+}
+.badge-entry-left {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #FF8F00;
+}
+.badge-entry-right {
+  font-size: 22rpx;
+  color: #FFA000;
 }
 
 /* 资料编辑弹窗 */

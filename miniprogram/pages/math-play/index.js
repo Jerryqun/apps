@@ -1,4 +1,5 @@
 var mathData = require("../../data/math.js");
+var user = require("../../utils/user.js");
 
 var feedbackAudio = null;
 var feedbackCache = {};
@@ -254,6 +255,8 @@ Page({
     if (this.data.score > best) {
       wx.setStorageSync(key, this.data.score);
     }
+    // 同步到云端
+    user.syncToCloud();
   },
 
   playAgain: function () {

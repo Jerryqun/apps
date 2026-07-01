@@ -1,6 +1,6 @@
 .study {
   min-height: 100vh;
-  padding: 24rpx 24rpx 40rpx;
+  padding: 24rpx 24rpx 220rpx;
   box-sizing: border-box;
 }
 

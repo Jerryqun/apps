@@ -14,9 +14,26 @@ Page({
   },
 
   onLoad: function () {
-    // 每次随机抽8题，不重复
-    var all = sentencesData.sentences.slice();
-    var pool = sentencesData.shuffle(all).slice(0, 8);
+    var self = this;
+    wx.cloud.callFunction({
+      name: "quickstartFunctions",
+      data: { type: "getQuizData", collection: "quiz_sentences" },
+      success: function (res) {
+        var result = res.result;
+        if (result && result.success && result.data && result.data.length > 0) {
+          self.initPool(result.data);
+          return;
+        }
+        self.initPool(sentencesData.sentences);
+      },
+      fail: function () {
+        self.initPool(sentencesData.sentences);
+      }
+    });
+  },
+
+  initPool: function (allSentences) {
+    var pool = sentencesData.shuffle(allSentences.slice()).slice(0, 8);
     this.pool = pool;
     this.setData({ total: pool.length });
     this.loadQuestion(0);

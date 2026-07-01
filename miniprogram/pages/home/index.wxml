@@ -20,6 +20,33 @@
     <view class="check-btn {{todayChecked ? 'check-btn-done' : ''}}" bindtap="doCheck">
       {{todayChecked ? '今日已打卡 ✅' : '点我打卡 🎀'}}
     </view>
+    <view class="history-btn" bindtap="toggleCalendar">
+      {{showCalendar ? '收起日历 ▲' : '查看历史打卡 📆'}}
+    </view>
+  </view>
+
+  <!-- 月历打卡记录 -->
+  <view class="calendar-card" wx:if="{{showCalendar}}">
+    <view class="cal-header">
+      <view class="cal-arrow" bindtap="prevMonth">❮</view>
+      <view class="cal-title">{{calTitle}}</view>
+      <view class="cal-arrow" bindtap="nextMonth">❯</view>
+    </view>
+    <view class="cal-summary">本月打卡 <text class="cal-count">{{calTotal}}</text> 天</view>
+    <view class="cal-weekbar">
+      <view class="cal-wk">日</view>
+      <view class="cal-wk">一</view>
+      <view class="cal-wk">二</view>
+      <view class="cal-wk">三</view>
+      <view class="cal-wk">四</view>
+      <view class="cal-wk">五</view>
+      <view class="cal-wk">六</view>
+    </view>
+    <view class="cal-grid">
+      <view class="cal-cell {{item.checked ? 'cal-checked' : ''}} {{item.isToday ? 'cal-today' : ''}}" wx:for="{{calDays}}" wx:key="index">
+        <text wx:if="{{item.day}}">{{item.day}}</text>
+      </view>
+    </view>
   </view>
 
   <!-- 快捷入口 -->

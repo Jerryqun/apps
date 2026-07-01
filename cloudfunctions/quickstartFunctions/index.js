@@ -52,6 +52,9 @@ const userLogin = async (event) => {
       ? cloudUser.quizPlayCount
       : (local.quizPlayCount || 0);
     const mergedCheckLog = mergeCheckLog(cloudUser.checkLog, local.checkLog);
+    const mergedMathScores = mergeMathScores(cloudUser.mathScores, local.mathScores);
+    const mergedHabitsLog = mergeHabitsLog(cloudUser.habitsLog, local.habitsLog);
+    const mergedFocusLog = mergeFocusLog(cloudUser.focusLog, local.focusLog);
 
     await db
       .collection(USER_COLLECTION)
@@ -63,6 +66,9 @@ const userLogin = async (event) => {
           quizBestScore: bestScore,
           quizPlayCount: playCount,
           checkLog: mergedCheckLog,
+          mathScores: mergedMathScores,
+          habitsLog: mergedHabitsLog,
+          focusLog: mergedFocusLog,
           updateTime: db.serverDate()
         }
       });
@@ -77,7 +83,10 @@ const userLogin = async (event) => {
         favoriteChars: mergedFavorites,
         quizBestScore: bestScore,
         quizPlayCount: playCount,
-        checkLog: mergedCheckLog
+        checkLog: mergedCheckLog,
+        mathScores: mergedMathScores,
+        habitsLog: mergedHabitsLog,
+        focusLog: mergedFocusLog
       }
     };
   }
@@ -92,6 +101,9 @@ const userLogin = async (event) => {
     quizBestScore: local.quizBestScore || 0,
     quizPlayCount: local.quizPlayCount || 0,
     checkLog: (local.checkLog && typeof local.checkLog === "object") ? local.checkLog : {},
+    mathScores: (local.mathScores && typeof local.mathScores === "object") ? local.mathScores : {},
+    habitsLog: (local.habitsLog && typeof local.habitsLog === "object") ? local.habitsLog : {},
+    focusLog: (local.focusLog && typeof local.focusLog === "object") ? local.focusLog : {},
     createTime: db.serverDate(),
     updateTime: db.serverDate()
   };
@@ -107,13 +119,16 @@ const userLogin = async (event) => {
       favoriteChars: newUser.favoriteChars,
       quizBestScore: newUser.quizBestScore,
       quizPlayCount: newUser.quizPlayCount,
-      checkLog: newUser.checkLog
+      checkLog: newUser.checkLog,
+      mathScores: newUser.mathScores,
+      habitsLog: newUser.habitsLog,
+      focusLog: newUser.focusLog
     }
   };
 };
 
 // 同步用户学习数据到云端
-// 入参 event.data: { learnedChars, favoriteChars, quizBestScore, quizPlayCount, checkLog }
+// 入参 event.data: { learnedChars, favoriteChars, quizBestScore, quizPlayCount, checkLog, mathScores }
 const syncUserData = async (event) => {
   const wxContext = cloud.getWXContext();
   const openid = wxContext.OPENID;
@@ -136,17 +151,34 @@ const syncUserData = async (event) => {
   }
 
   // checkLog 需要合并而非覆盖：先读云端已有记录，合并后再写入
-  if (data.checkLog && typeof data.checkLog === "object") {
-    const queryResult = await db
-      .collection(USER_COLLECTION)
-      .where({ _openid: openid })
-      .get();
-    if (queryResult.data.length > 0) {
-      const cloudCheckLog = queryResult.data[0].checkLog || {};
+  const queryResult = await db
+    .collection(USER_COLLECTION)
+    .where({ _openid: openid })
+    .get();
+
+  if (queryResult.data.length > 0) {
+    const cloudUser = queryResult.data[0];
+    if (data.checkLog && typeof data.checkLog === "object") {
+      const cloudCheckLog = cloudUser.checkLog || {};
       updateData.checkLog = mergeCheckLog(cloudCheckLog, data.checkLog);
-    } else {
-      updateData.checkLog = data.checkLog;
     }
+    // 数学分数合并（取较大值）
+    if (data.mathScores && typeof data.mathScores === "object") {
+      updateData.mathScores = mergeMathScores(cloudUser.mathScores, data.mathScores);
+    }
+    // 习惯打卡合并
+    if (data.habitsLog && typeof data.habitsLog === "object") {
+      updateData.habitsLog = mergeHabitsLog(cloudUser.habitsLog, data.habitsLog);
+    }
+    // 专注记录合并
+    if (data.focusLog && typeof data.focusLog === "object") {
+      updateData.focusLog = mergeFocusLog(cloudUser.focusLog, data.focusLog);
+    }
+  } else {
+    if (data.checkLog) updateData.checkLog = data.checkLog;
+    if (data.mathScores) updateData.mathScores = data.mathScores;
+    if (data.habitsLog) updateData.habitsLog = data.habitsLog;
+    if (data.focusLog) updateData.focusLog = data.focusLog;
   }
 
   const result = await db
@@ -198,6 +230,53 @@ function mergeCheckLog(cloudLog, localLog) {
   const local = (localLog && typeof localLog === "object") ? localLog : {};
   Object.keys(cloud).forEach(function (key) { merged[key] = true; });
   Object.keys(local).forEach(function (key) { merged[key] = true; });
+  return merged;
+}
+
+// 合并数学分数（每个gameId取较大值）
+// mathScores 格式：{ "calc": 80, "compare": 60 }
+function mergeMathScores(cloudScores, localScores) {
+  const merged = {};
+  const cloud = (cloudScores && typeof cloudScores === "object") ? cloudScores : {};
+  const local = (localScores && typeof localScores === "object") ? localScores : {};
+  const allKeys = Object.keys(cloud).concat(Object.keys(local));
+  allKeys.forEach(function (key) {
+    merged[key] = Math.max(cloud[key] || 0, local[key] || 0);
+  });
+  return merged;
+}
+
+// 合并习惯打卡记录（每天的列表取并集）
+// habitsLog 格式：{ "2026-6-22": ["bag","read"], ... }
+function mergeHabitsLog(cloudLog, localLog) {
+  const cloud = (cloudLog && typeof cloudLog === "object") ? cloudLog : {};
+  const local = (localLog && typeof localLog === "object") ? localLog : {};
+  const merged = {};
+  const allDays = Object.keys(cloud).concat(Object.keys(local));
+  allDays.forEach(function (day) {
+    if (merged[day]) return; // 已处理过
+    const cloudArr = Array.isArray(cloud[day]) ? cloud[day] : [];
+    const localArr = Array.isArray(local[day]) ? local[day] : [];
+    const combined = cloudArr.slice();
+    localArr.forEach(function (id) {
+      if (combined.indexOf(id) === -1) combined.push(id);
+    });
+    merged[day] = combined;
+  });
+  return merged;
+}
+
+// 合并专注记录（每天取较大值）
+// focusLog 格式：{ "2026-6-22": 3, ... }
+function mergeFocusLog(cloudLog, localLog) {
+  const cloud = (cloudLog && typeof cloudLog === "object") ? cloudLog : {};
+  const local = (localLog && typeof localLog === "object") ? localLog : {};
+  const merged = {};
+  const allDays = Object.keys(cloud).concat(Object.keys(local));
+  allDays.forEach(function (day) {
+    if (merged[day] !== undefined) return;
+    merged[day] = Math.max(cloud[day] || 0, local[day] || 0);
+  });
   return merged;
 }
 
@@ -466,6 +545,64 @@ const importFunFacts = async (event) => {
 
 // ============ 趣味小知识结束 ============
 
+// ============ 题库数据（古诗/字谜/看图说话/连词成句） ============
+
+// 获取题库数据
+// event.collection: 集合名 (quiz_poems, quiz_riddles, quiz_pictures, quiz_sentences)
+const getQuizData = async (event) => {
+  const collection = event.collection;
+  if (!collection) return { success: false, errMsg: "collection is required" };
+
+  try {
+    const countResult = await db.collection(collection).count();
+    const total = countResult.total;
+    if (total === 0) return { success: false, errMsg: "no data", total: 0 };
+
+    // 小程序云数据库单次最多取100条，分批取
+    let allData = [];
+    const batchSize = 100;
+    for (let i = 0; i < total; i += batchSize) {
+      const batch = await db.collection(collection).skip(i).limit(batchSize).get();
+      allData = allData.concat(batch.data);
+    }
+    return { success: true, data: allData, total: total };
+  } catch (e) {
+    return { success: false, errMsg: e.message };
+  }
+};
+
+// 导入题库数据（支持清空后全量导入）
+// event.collection: 集合名, event.items: 数据数组, event.clear: 是否先清空
+const importQuizData = async (event) => {
+  const collection = event.collection;
+  const items = event.items;
+  if (!collection || !items || !items.length) {
+    return { success: false, errMsg: "collection and items required" };
+  }
+
+  try { await db.createCollection(collection); } catch (e) { /* 已存在 */ }
+
+  // 清空已有数据
+  if (event.clear) {
+    while (true) {
+      const res = await db.collection(collection).limit(100).get();
+      if (res.data.length === 0) break;
+      for (const item of res.data) {
+        await db.collection(collection).doc(item._id).remove();
+      }
+    }
+  }
+
+  let imported = 0;
+  for (const item of items) {
+    await db.collection(collection).add({ data: item });
+    imported++;
+  }
+  return { success: true, imported: imported };
+};
+
+// ============ 题库数据结束 ============
+
 // 获取小程序二维码
 const getMiniProgramCode = async () => {
   // 获取小程序二维码的buffer
@@ -652,5 +789,9 @@ exports.main = async (event, context) => {
       return await importFunFacts(event);
     case "getPinyinAudio":
       return await getPinyinAudio(event);
+    case "getQuizData":
+      return await getQuizData(event);
+    case "importQuizData":
+      return await importQuizData(event);
   }
 };

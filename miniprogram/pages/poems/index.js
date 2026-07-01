@@ -10,7 +10,26 @@ Page({
   },
 
   onLoad: function () {
-    var poems = poemsData.poems;
+    var self = this;
+    // 云端优先
+    wx.cloud.callFunction({
+      name: "quickstartFunctions",
+      data: { type: "getQuizData", collection: "quiz_poems" },
+      success: function (res) {
+        var result = res.result;
+        if (result && result.success && result.data && result.data.length > 0) {
+          self.initPoems(result.data);
+          return;
+        }
+        self.initPoems(poemsData.poems);
+      },
+      fail: function () {
+        self.initPoems(poemsData.poems);
+      }
+    });
+  },
+
+  initPoems: function (poems) {
     this.setData({
       poems: poems,
       current: poems[0],

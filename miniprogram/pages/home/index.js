@@ -34,11 +34,20 @@ Page({
     streakDays: 0,
     todayChecked: false,
     weekChecks: [],
+    // 月历
+    showCalendar: false,
+    calYear: 0,
+    calMonth: 0,
+    calTitle: "",
+    calDays: [],
+    calTotal: 0,
     quickEntries: [
       { id: "hanzi", name: "认汉字", icon: "📖", color: "#FF8A65", desc: "今天学几个新字" },
       { id: "math", name: "数学游戏", icon: "🔢", color: "#42A5F5", desc: "有趣的数学闯关" },
       { id: "pinyin", name: "学拼音", icon: "🔤", color: "#AB47BC", desc: "拼音声母韵母" },
-      { id: "english", name: "学英语", icon: "🌍", color: "#66BB6A", desc: "字母和单词" }
+      { id: "english", name: "学英语", icon: "🌍", color: "#66BB6A", desc: "字母和单词" },
+      { id: "habits", name: "好习惯", icon: "✅", color: "#26C6DA", desc: "每日习惯打卡" },
+      { id: "focus", name: "专注", icon: "⏱️", color: "#EC407A", desc: "番茄钟计时" }
     ]
   },
 
@@ -50,6 +59,9 @@ Page({
 
   onShow: function () {
     this.loadStreak();
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 });
+    }
   },
 
   initToday: function () {
@@ -155,6 +167,10 @@ Page({
     wx.setStorageSync("checkLog", checkLog);
     wx.vibrateShort({ type: "light" });
     this.loadStreak();
+    // 如果月历开着，刷新当月日历
+    if (this.data.showCalendar) {
+      this.buildCalendar(this.data.calYear, this.data.calMonth);
+    }
     wx.showToast({ title: "打卡成功！🎉", icon: "none" });
     // 同步打卡记录到云端（静默执行，失败不阻塞）
     user.syncToCloud();
@@ -186,6 +202,10 @@ Page({
       wx.navigateTo({ url: "/pages/pinyin/index" });
     } else if (id === "english") {
       wx.navigateTo({ url: "/pages/english/index" });
+    } else if (id === "habits") {
+      wx.navigateTo({ url: "/pages/habits/index" });
+    } else if (id === "focus") {
+      wx.navigateTo({ url: "/pages/timer/index" });
     }
   },
 
@@ -195,5 +215,69 @@ Page({
 
   revealAnswer: function () {
     this.setData({ showAnswer: true });
+  },
+
+  // ========= 月历打卡记录 =========
+  toggleCalendar: function () {
+    var show = !this.data.showCalendar;
+    if (show && this.data.calYear === 0) {
+      var now = new Date();
+      this.buildCalendar(now.getFullYear(), now.getMonth() + 1);
+    }
+    this.setData({ showCalendar: show });
+  },
+
+  prevMonth: function () {
+    var y = this.data.calYear;
+    var m = this.data.calMonth - 1;
+    if (m < 1) { m = 12; y--; }
+    this.buildCalendar(y, m);
+  },
+
+  nextMonth: function () {
+    var now = new Date();
+    var y = this.data.calYear;
+    var m = this.data.calMonth + 1;
+    if (m > 12) { m = 1; y++; }
+    // 不能超过当前月
+    if (y > now.getFullYear() || (y === now.getFullYear() && m > now.getMonth() + 1)) return;
+    this.buildCalendar(y, m);
+  },
+
+  buildCalendar: function (year, month) {
+    var checkLog = wx.getStorageSync("checkLog") || {};
+    var now = new Date();
+    var todayKey = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+
+    // 本月第一天是周几，本月有几天
+    var firstDay = new Date(year, month - 1, 1).getDay(); // 0=周日
+    var daysInMonth = new Date(year, month, 0).getDate();
+
+    var calDays = [];
+    var total = 0;
+
+    // 前置空白（周日开头）
+    for (var i = 0; i < firstDay; i++) {
+      calDays.push({ day: "", checked: false, isToday: false });
+    }
+
+    for (var d = 1; d <= daysInMonth; d++) {
+      var key = year + "-" + month + "-" + d;
+      var checked = !!checkLog[key];
+      if (checked) total++;
+      calDays.push({
+        day: d,
+        checked: checked,
+        isToday: key === todayKey
+      });
+    }
+
+    this.setData({
+      calYear: year,
+      calMonth: month,
+      calTitle: year + "年" + month + "月",
+      calDays: calDays,
+      calTotal: total
+    });
   }
 });

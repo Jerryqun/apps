@@ -14,7 +14,10 @@ var games = [
   { id: "chaincalc", name: "连加连减", icon: "🔗", color: "#5C6BC0", desc: "两步运算", total: 10 },
   { id: "money", name: "认识人民币", icon: "💰", color: "#FBC02D", desc: "购物找零", total: 8 },
   { id: "compose", name: "数的组成", icon: "🔢", color: "#EC407A", desc: "十位和个位", total: 8 },
-  { id: "classify", name: "分类整理", icon: "🗂️", color: "#66BB6A", desc: "找不同类", total: 8 }
+  { id: "classify", name: "分类整理", icon: "🗂️", color: "#66BB6A", desc: "找不同类", total: 8 },
+  { id: "solid", name: "立体图形", icon: "📦", color: "#8D6E63", desc: "认识长方体球", total: 8 },
+  { id: "tenmethod", name: "凑十破十", icon: "🔟", color: "#E91E63", desc: "凑十法破十法", total: 10 },
+  { id: "wordproblem", name: "应用题", icon: "📖", color: "#00897B", desc: "图文解决问题", total: 8 }
 ];
 
 function getGameById(id) {
@@ -485,6 +488,104 @@ function genClassify() {
   return { type: "classify", text: g.items.join("  "), hint: "哪一个和其它的不同类？", answer: g.odd, options: shuffle(g.items.slice()) };
 }
 
+// ======== 认识立体图形 ========
+function genSolid() {
+  var mode = randInt(0, 2);
+  if (mode === 0) {
+    var shapes = [
+      { name: "长方体", desc: "6个面，对面相同，像砖块", items: ["📦", "🧱", "冰箱", "书本"] },
+      { name: "正方体", desc: "6个面都一样大，像骰子", items: ["🎲", "魔方", "方糖"] },
+      { name: "圆柱", desc: "上下两个圆，中间直直的", items: ["🥫", "水杯", "柱子", "蜡烛"] },
+      { name: "球", desc: "圆圆的，能滚动", items: ["⚽", "🏀", "🌍", "乒乓球"] }
+    ];
+    var s = pickRandom(shapes);
+    var others = shapes.filter(function(x) { return x.name !== s.name; }).map(function(x) { return x.name; });
+    return { type: "solid", text: s.desc, hint: "这是什么图形？", answer: s.name, options: shuffle([s.name].concat(others)) };
+  } else if (mode === 1) {
+    var items = [
+      { thing: "足球", answer: "球" }, { thing: "魔方", answer: "正方体" },
+      { thing: "易拉罐", answer: "圆柱" }, { thing: "砖头", answer: "长方体" },
+      { thing: "地球仪", answer: "球" }, { thing: "铅笔盒", answer: "长方体" },
+      { thing: "茶叶罐", answer: "圆柱" }, { thing: "骰子", answer: "正方体" }
+    ];
+    var item = pickRandom(items);
+    return { type: "solid", text: "「" + item.thing + "」是什么形状？", hint: "想一想生活中的物品", answer: item.answer, options: shuffle(["长方体", "正方体", "圆柱", "球"]) };
+  } else {
+    var questions = [
+      { q: "正方体有几个面？", a: "6", opts: ["4", "6", "8", "12"] },
+      { q: "球有几个平面？", a: "0", opts: ["0", "1", "2", "6"] },
+      { q: "圆柱有几个圆形的面？", a: "2", opts: ["1", "2", "3", "4"] },
+      { q: "哪个图形能滚动？", a: "球", opts: ["球", "正方体", "长方体", "三角形"] },
+      { q: "哪个图形6个面都一样大？", a: "正方体", opts: ["正方体", "长方体", "圆柱", "球"] }
+    ];
+    var qn = pickRandom(questions);
+    return { type: "solid", text: qn.q, hint: "想一想图形的特征", answer: qn.a, options: shuffle(qn.opts.slice()) };
+  }
+}
+
+// ======== 凑十法/破十法 ========
+function genTenMethod() {
+  var mode = randInt(0, 1);
+  if (mode === 0) {
+    // 凑十法：a + b（a>=6, b足够大使得和>10）
+    var a = pickRandom([8, 9, 7, 6]);
+    var complement = 10 - a;
+    var b = randInt(complement + 1, 9); // 确保 a+b > 10
+    var answer = a + b;
+    var remainder = b - complement;
+    var hint = "凑十法：" + a + "+" + complement + "=10，10+" + remainder + "=" + answer;
+    var options = [answer];
+    while (options.length < 4) {
+      var fake = answer + randInt(-3, 3);
+      if (fake > 0 && fake !== answer && options.indexOf(fake) === -1) options.push(fake);
+    }
+    return { type: "tenmethod", text: a + " + " + b + " = ?", hint: hint, answer: answer, options: shuffle(options) };
+  } else {
+    // 破十法：a - b（a在11-18, b在2-9, a-b需要退位）
+    var a2 = randInt(11, 18);
+    var b2 = randInt(2, 9);
+    while (b2 <= a2 % 10) { b2 = randInt(2, 9); } // 确保需要退位
+    var answer2 = a2 - b2;
+    var ones = a2 % 10;
+    var fromTen = 10 - b2;
+    var hint2 = "破十法：10-" + b2 + "=" + fromTen + "，" + fromTen + "+" + ones + "=" + answer2;
+    var options2 = [answer2];
+    while (options2.length < 4) {
+      var fake2 = answer2 + randInt(-3, 3);
+      if (fake2 >= 0 && fake2 !== answer2 && options2.indexOf(fake2) === -1) options2.push(fake2);
+    }
+    return { type: "tenmethod", text: a2 + " - " + b2 + " = ?", hint: hint2, answer: answer2, options: shuffle(options2) };
+  }
+}
+
+// ======== 图文应用题 ========
+function genWordProblem() {
+  var templates = [
+    { scene: "🌳🐦🐦🐦🐦🐦", q: "树上有{a}只鸟，飞走了{b}只，还剩几只？", op: "-" },
+    { scene: "🍎🍎🍎 + 🍎🍎", q: "篮子里有{a}个苹果，又放进{b}个，一共几个？", op: "+" },
+    { scene: "👧👦👧👦👧", q: "教室里有{a}个女生和{b}个男生，一共有几个同学？", op: "+" },
+    { scene: "🐟🐟🐟🐟🐟🐟", q: "池塘有{a}条鱼，捞走了{b}条，还剩几条？", op: "-" },
+    { scene: "🎈🎈🎈🎈", q: "小明有{a}个气球，送给小红{b}个，还剩几个？", op: "-" },
+    { scene: "🌸🌸🌸 + 🌸🌸🌸🌸", q: "花园里有{a}朵红花和{b}朵黄花，一共有几朵花？", op: "+" },
+    { scene: "🚌👨👨👨👨👨", q: "公交车上有{a}人，到站下去了{b}人，车上还有几人？", op: "-" },
+    { scene: "📚📚📚📚", q: "书架上有{a}本书，小明又放了{b}本，现在有几本？", op: "+" }
+  ];
+  var t = pickRandom(templates);
+  var a, b, answer;
+  if (t.op === "+") {
+    a = randInt(3, 12); b = randInt(2, 10); answer = a + b;
+  } else {
+    a = randInt(8, 18); b = randInt(2, a - 1); answer = a - b;
+  }
+  var text = t.q.replace("{a}", a).replace("{b}", b);
+  var options = [answer];
+  while (options.length < 4) {
+    var fake = answer + randInt(-4, 4);
+    if (fake >= 0 && fake !== answer && options.indexOf(fake) === -1) options.push(fake);
+  }
+  return { type: "wordproblem", text: text, hint: t.scene, answer: answer, options: shuffle(options) };
+}
+
 // ======== 统一生成题目 ========
 var generators = {
   calc: genCalc,
@@ -498,7 +599,10 @@ var generators = {
   chaincalc: genChainCalc,
   money: genMoney,
   compose: genCompose,
-  classify: genClassify
+  classify: genClassify,
+  solid: genSolid,
+  tenmethod: genTenMethod,
+  wordproblem: genWordProblem
 };
 
 function generateQuestions(gameId) {

@@ -177,6 +177,57 @@ var categories = [
       { word: "I can do it.", meaning: "我能做到。", emoji: "💪" },
       { word: "Good job!", meaning: "做得好！", emoji: "🌟" }
     ]
+  },
+  {
+    id: "food",
+    name: "食物饮料",
+    icon: "🍔",
+    color: "#FF7043",
+    desc: "好吃的食物",
+    list: [
+      { word: "bread", meaning: "面包", emoji: "🍞" },
+      { word: "rice", meaning: "米饭", emoji: "🍚" },
+      { word: "milk", meaning: "牛奶", emoji: "🥛" },
+      { word: "egg", meaning: "鸡蛋", emoji: "🥚" },
+      { word: "cake", meaning: "蛋糕", emoji: "🎂" },
+      { word: "juice", meaning: "果汁", emoji: "🧃" },
+      { word: "water", meaning: "水", emoji: "💧" },
+      { word: "noodle", meaning: "面条", emoji: "🍜" }
+    ]
+  },
+  {
+    id: "transport",
+    name: "交通工具",
+    icon: "🚌",
+    color: "#5C6BC0",
+    desc: "出行方式",
+    list: [
+      { word: "bus", meaning: "公共汽车", emoji: "🚌" },
+      { word: "car", meaning: "小汽车", emoji: "🚗" },
+      { word: "bike", meaning: "自行车", emoji: "🚲" },
+      { word: "train", meaning: "火车", emoji: "🚆" },
+      { word: "plane", meaning: "飞机", emoji: "✈️" },
+      { word: "ship", meaning: "轮船", emoji: "🚢" },
+      { word: "taxi", meaning: "出租车", emoji: "🚕" },
+      { word: "subway", meaning: "地铁", emoji: "🚇" }
+    ]
+  },
+  {
+    id: "school",
+    name: "学习用品",
+    icon: "✏️",
+    color: "#26A69A",
+    desc: "文具和家具",
+    list: [
+      { word: "book", meaning: "书", emoji: "📖" },
+      { word: "pen", meaning: "钢笔", emoji: "🖊️" },
+      { word: "pencil", meaning: "铅笔", emoji: "✏️" },
+      { word: "ruler", meaning: "尺子", emoji: "📏" },
+      { word: "bag", meaning: "书包", emoji: "🎒" },
+      { word: "desk", meaning: "课桌", emoji: "🪑" },
+      { word: "chair", meaning: "椅子", emoji: "🪑" },
+      { word: "eraser", meaning: "橡皮", emoji: "🧹" }
+    ]
   }
 ];
 

@@ -1,0 +1,94 @@
+.badges-page {
+  min-height: 100vh;
+  padding: 24rpx 28rpx;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #FFF3E0 0%, #FFF8E1 100%);
+}
+.summary-card {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 28rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.06);
+}
+.summary-text {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #FF8F00;
+  margin-bottom: 12rpx;
+}
+.summary-bar {
+  height: 14rpx;
+  background: #e0e0e0;
+  border-radius: 7rpx;
+  overflow: hidden;
+}
+.summary-inner {
+  height: 100%;
+  background: linear-gradient(90deg, #FFC107, #FF8F00);
+  border-radius: 7rpx;
+  transition: width 0.4s ease;
+}
+.badge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20rpx;
+}
+.badge-item {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 24rpx 16rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+.badge-item.locked {
+  opacity: 0.6;
+}
+.badge-item.unlocked {
+  border: 2rpx solid #FFC107;
+  background: #FFFDE7;
+}
+.badge-icon {
+  font-size: 56rpx;
+  margin-bottom: 8rpx;
+}
+.badge-item.locked .badge-icon {
+  filter: grayscale(1);
+}
+.badge-name {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+.badge-desc {
+  font-size: 20rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+.badge-progress {
+  margin-top: 8rpx;
+}
+.badge-progress-bar {
+  height: 10rpx;
+  background: #e0e0e0;
+  border-radius: 5rpx;
+  overflow: hidden;
+  margin-bottom: 4rpx;
+}
+.badge-progress-inner {
+  height: 100%;
+  background: #FFC107;
+  border-radius: 5rpx;
+}
+.badge-progress-text {
+  font-size: 18rpx;
+  color: #999;
+}
+.badge-done {
+  font-size: 20rpx;
+  color: #FF8F00;
+  font-weight: bold;
+  margin-top: 4rpx;
+}

@@ -24,6 +24,18 @@
       <view class="quick-desc">排列词语组句子</view>
     </view>
   </view>
+  <view class="quick-row">
+    <view class="quick-card" style="background: #8D6E63" bindtap="goStrokes">
+      <view class="quick-icon">✏️</view>
+      <view class="quick-name">笔画笔顺</view>
+      <view class="quick-desc">基本笔画 · 书写规则</view>
+    </view>
+    <view class="quick-card" style="background: #66BB6A" bindtap="goEnglish">
+      <view class="quick-icon">🌍</view>
+      <view class="quick-name">英语学习</view>
+      <view class="quick-desc">字母 · 单词 · 句型</view>
+    </view>
+  </view>
 
   <!-- 汉字进度 -->
   <view class="progress-bar-wrap">
